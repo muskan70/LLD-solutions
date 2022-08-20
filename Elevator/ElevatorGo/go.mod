@@ -1,4 +1,4 @@
-module dotpe/projects
+module elevatorGo
 
 go 1.19
 

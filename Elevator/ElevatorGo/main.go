@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dotpe/projects/usecase"
+	"elevatorGo/usecase"
 	"fmt"
 )
 

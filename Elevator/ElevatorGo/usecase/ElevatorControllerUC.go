@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"dotpe/projects/domain/entity"
+	"elevatorGo/domain/entity"
 	"math/rand"
 )
 
@@ -9,7 +9,7 @@ type ElevatorControllerUC struct {
 	StartFloor    int
 	EndFloor      int
 	NoofElevators int
-	Elevators     map[int]entity.Elevator
+	Elevators     map[int]*entity.Elevator
 	Floors        map[int]entity.Floor
 }
 
@@ -18,7 +18,7 @@ func NewDispacherUcase(startfl, endfl, elevators int) ElevatorControllerUC {
 		StartFloor:    startfl,
 		EndFloor:      endfl,
 		NoofElevators: elevators,
-		Elevators:     make(map[int]entity.Elevator),
+		Elevators:     make(map[int]*entity.Elevator),
 		Floors:        make(map[int]entity.Floor),
 	}
 	for i := 0; i < d.NoofElevators; i++ {

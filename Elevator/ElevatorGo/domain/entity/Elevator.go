@@ -22,8 +22,8 @@ type Elevator struct {
 	DownRequests *binaryheap.Heap
 }
 
-func NewElevator(cur, startFl, endFl int) Elevator {
-	e := Elevator{
+func NewElevator(cur, startFl, endFl int) *Elevator {
+	e := &Elevator{
 		CurrentFloor: cur,
 		StartFloor:   startFl,
 		EndFloor:     endFl,
@@ -45,4 +45,7 @@ func (e *Elevator) CloseDoor() {
 
 func (e *Elevator) OpenDoor() {
 	e.Door = true
+}
+
+func (e *Elevator) AddRequest(floorNo int) {
 }

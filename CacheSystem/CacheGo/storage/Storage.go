@@ -1,7 +1,7 @@
 package storage
 
-type Storage interface {
+type IStorage interface {
 	Add(key, value string)
 	Remove(key string)
-	Get(key string) string
+	Get(key string) *string
 }

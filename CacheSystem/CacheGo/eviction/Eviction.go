@@ -1,6 +1,6 @@
 package eviction
 
-type Eviction interface {
+type IEviction interface {
 	KeyAccessed(key string)
 	EvictKey()
 }

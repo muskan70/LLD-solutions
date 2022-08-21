@@ -20,9 +20,11 @@ func (l *LRUEviction) KeyAccessed(key string) {
 	l.mp[key] = n
 }
 
-func (l *LRUEviction) EvictKey() {
+func (l *LRUEviction) EvictKey() string {
 	n := l.lst.Evict()
 	if n != nil {
 		delete(l.mp, *n)
+		return *n
 	}
+	return ""
 }

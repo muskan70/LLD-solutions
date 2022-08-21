@@ -1,5 +1,7 @@
 package storage
 
+import "fmt"
+
 type HashmapStorage struct {
 	hmap map[string]string
 }
@@ -21,4 +23,10 @@ func (hs *HashmapStorage) Get(key string) *string {
 		return &val
 	}
 	return nil
+}
+
+func (hs *HashmapStorage) PrintAll() {
+	for key, val := range hs.hmap {
+		fmt.Println(key, val)
+	}
 }

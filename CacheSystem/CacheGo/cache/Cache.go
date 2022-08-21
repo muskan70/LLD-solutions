@@ -13,13 +13,16 @@ type Cache struct {
 }
 
 func NewCache(sz int, stg storage.IStorage, evic eviction.IEviction) Cache {
-	return Cache{size: 7, curSize: 0, stg: stg, evic: evic}
+	return Cache{size: sz, curSize: 0, stg: stg, evic: evic}
 }
 
 func (c *Cache) Put(key, value string) {
 	if c.curSize == c.size {
-		c.evic.EvictKey()
+		c.curSize--
+		m := c.evic.EvictKey()
+		c.stg.Remove(m)
 	}
+	c.curSize++
 	c.stg.Add(key, value)
 	c.evic.KeyAccessed(key)
 }
@@ -28,6 +31,7 @@ func (c *Cache) Get(key string) string {
 	val := c.stg.Get(key)
 	if val != nil {
 		c.evic.KeyAccessed(key)
+		return *val
 	}
-	return *val
+	return ""
 }

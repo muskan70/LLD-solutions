@@ -32,6 +32,12 @@ func (d *DoublyLinkedList) Remove(node *Node) {
 	if node == nil {
 		return
 	}
+	if node == d.head {
+		d.head = node.next
+	}
+	if node == d.tail {
+		d.tail = node.prev
+	}
 	if node.next != nil {
 		node.next.prev = node.prev
 	}

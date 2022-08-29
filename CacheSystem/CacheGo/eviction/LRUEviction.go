@@ -3,7 +3,6 @@ package eviction
 import ddl "cacheGo/doublylinkedlist"
 
 type LRUEviction struct {
-	IEviction
 	lst ddl.DoublyLinkedList
 	mp  map[string]*ddl.Node
 }
@@ -14,14 +13,14 @@ func NewLRUEviction() IEviction {
 
 func (l *LRUEviction) KeyAccessed(key string) {
 	if val, ok := l.mp[key]; ok {
-		l.lst.Remove(val)
+		l.lst.RemoveNode(val)
 	}
-	n := l.lst.Add(key)
+	n := l.lst.AddNodeAtEnd(key)
 	l.mp[key] = n
 }
 
 func (l *LRUEviction) EvictKey() string {
-	n := l.lst.Evict()
+	n := l.lst.RemoveNodeAtHead()
 	if n != nil {
 		delete(l.mp, *n)
 		return *n

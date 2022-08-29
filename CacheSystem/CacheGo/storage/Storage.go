@@ -1,8 +1,8 @@
 package storage
 
 type IStorage interface {
-	Add(key, value string)
+	Add(key string, value interface{})
 	Remove(key string)
-	Get(key string) *string
+	Get(key string) interface{}
 	PrintAll()
 }

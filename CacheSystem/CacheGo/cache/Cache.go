@@ -16,7 +16,7 @@ func NewCache(sz int, stg storage.IStorage, evic eviction.IEviction) Cache {
 	return Cache{size: sz, curSize: 0, stg: stg, evic: evic}
 }
 
-func (c *Cache) Put(key, value string) {
+func (c *Cache) Put(key string, value interface{}) {
 	if c.curSize == c.size {
 		c.curSize--
 		m := c.evic.EvictKey()
@@ -25,13 +25,14 @@ func (c *Cache) Put(key, value string) {
 	c.curSize++
 	c.stg.Add(key, value)
 	c.evic.KeyAccessed(key)
+	c.stg.PrintAll()
 }
 
-func (c *Cache) Get(key string) string {
+func (c *Cache) Get(key string) interface{} {
 	val := c.stg.Get(key)
 	if val != nil {
 		c.evic.KeyAccessed(key)
-		return *val
+		return val
 	}
-	return ""
+	return nil
 }

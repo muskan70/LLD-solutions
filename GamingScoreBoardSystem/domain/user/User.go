@@ -96,7 +96,7 @@ func RegisterUser(ctx context.Context, usr *requests.RegisterUserRequest) error 
 	return nil
 
 }
-func UpdateUserScore(ctx context.Context, id, score int) error {
+func UpdateUserScores(ctx context.Context, id, score int) error {
 	db1, err := db.GetMySqlDBConnection()
 	if err != nil {
 		log.Println(err)
@@ -116,13 +116,4 @@ func UpdateUserScore(ctx context.Context, id, score int) error {
 	}
 	return nil
 
-}
-
-func GetUserName(userId int) string {
-
-	return ""
-}
-
-func GetUserScore(userId int) int {
-	return 0
 }

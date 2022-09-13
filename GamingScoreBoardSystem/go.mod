@@ -6,6 +6,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.3
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/robfig/cron/v3 v3.0.1
 )
 
 require (

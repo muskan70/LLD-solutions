@@ -103,7 +103,9 @@ func UpdateUserScores(ctx context.Context, id, score int) error {
 		return err
 	}
 	defer db1.Close()
-	queryBuilder := squirrel.Update("user_info").Set("score", score).Where(squirrel.Eq{"user_id": id})
+	queryBuilder := squirrel.Update("user_info").
+		Set("score", squirrel.Expr("score + ?", score)).
+		Where(squirrel.Eq{"user_id": id})
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
 		log.Println(err)

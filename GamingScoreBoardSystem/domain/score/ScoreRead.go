@@ -13,7 +13,6 @@ import (
 
 func ReadScoreFromFile(ctx context.Context) error {
 	filename := ScoreFileName + time.Now().Add(-1*time.Minute).Format("2006-01-02 15:04")
-	log.Println(filename)
 	readFile, err := os.Open(filename)
 	if err != nil {
 		log.Println(err)

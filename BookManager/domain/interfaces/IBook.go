@@ -1,8 +1,8 @@
 package interfaces
 
 import (
+	"bookMg/domain/entity"
 	"context"
-	"dotpe/demo/domain/entity"
 )
 
 type IBookUcase interface {

@@ -1,10 +1,10 @@
 package web
 
 import (
-	"dotpe/demo/domain/entity"
-	"dotpe/demo/domain/interfaces"
-	"dotpe/demo/domain/request"
-	"dotpe/demo/domain/response"
+	"bookMg/domain/entity"
+	"bookMg/domain/interfaces"
+	"bookMg/domain/request"
+	"bookMg/domain/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

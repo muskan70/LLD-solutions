@@ -1,14 +1,10 @@
 package db
 
 import (
-	"context"
 	"database/sql"
-	"dotpe/demo/utils"
 	"fmt"
-	"runtime"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/sirupsen/logrus"
 )
 
 var Client *sql.DB
@@ -30,11 +26,4 @@ func Init() (*sql.DB, error) {
 	}
 
 	return db, err
-}
-func WriteDBError(ctx context.Context, err error, db, etype string) {
-	_, file, line, _ := runtime.Caller(1)
-	utils.DLogger.WriteLogs(ctx, logrus.Fields{
-		"caller": fmt.Sprintf("%s:%s:%s:%d", db, etype, file, line),
-		"error":  err.Error(),
-	}, logrus.ErrorLevel, "MySQLError")
 }

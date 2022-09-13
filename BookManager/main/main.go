@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dotpe/demo/routes"
+	"bookMg/routes"
 
 	"github.com/gin-gonic/gin"
 )

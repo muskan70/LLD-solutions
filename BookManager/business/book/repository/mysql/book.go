@@ -1,11 +1,11 @@
 package mysql
 
 import (
+	"bookMg/db"
+	"bookMg/domain/entity"
+	"bookMg/domain/interfaces"
 	"context"
 	"database/sql"
-	"dotpe/demo/db"
-	"dotpe/demo/domain/entity"
-	"dotpe/demo/domain/interfaces"
 	"fmt"
 	"log"
 
@@ -25,7 +25,7 @@ func (brepo *bookRepo) GetAllBooks(ctx context.Context) ([]entity.Book, error) {
 	var book2 []entity.Book
 	db1, err := db.Init()
 	if err != nil {
-
+		log.Println(err)
 		return nil, err
 	}
 	defer db1.Close()
@@ -91,13 +91,7 @@ func (brepo *bookRepo) DeleteBookById(ctx context.Context, id int) error {
 		log.Println(err)
 		return err
 	}
-	row, err := db1.QueryContext(ctx, query, qargs...)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
 
-	defer row.Close()
 	_, err = db1.ExecContext(ctx, query, qargs...)
 	if err != nil {
 		log.Println(err)
@@ -119,16 +113,11 @@ func (brepo *bookRepo) AddNewBook(ctx context.Context, req entity.Book) error {
 		log.Println(err)
 		return err
 	}
-	_, err2 := db1.QueryContext(ctx, query, qargs...)
-	if err2 != nil {
-		log.Println(err)
-		return err2
-	}
 
-	_, err3 := db1.ExecContext(ctx, query, qargs...)
-	if err2 != nil {
-		fmt.Println(err3)
-		return err3
+	_, err = db1.ExecContext(ctx, query, qargs...)
+	if err != nil {
+		fmt.Println(err)
+		return err
 	}
 	return nil
 
@@ -170,13 +159,7 @@ func (brepo *bookRepo) UpdateDetails(ctx context.Context, req entity.Book) error
 		log.Println(err)
 		return err
 	}
-	row, err := db1.QueryContext(ctx, query, qargs...)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
 
-	defer row.Close()
 	_, err2 := db1.ExecContext(ctx, query, qargs...)
 	if err2 != nil {
 		log.Println(err)

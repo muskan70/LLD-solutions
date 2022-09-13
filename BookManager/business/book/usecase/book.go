@@ -1,9 +1,9 @@
 package usecase
 
 import (
+	"bookMg/domain/entity"
+	"bookMg/domain/interfaces"
 	"context"
-	"dotpe/demo/domain/entity"
-	"dotpe/demo/domain/interfaces"
 )
 
 type bookUCase struct {

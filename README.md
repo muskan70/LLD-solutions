@@ -6,6 +6,7 @@
 5. Parking Lot
 6. Book Manager
 7. MultiAttribute Key-Value Cache System
+8. Course Curriculum manager
 
 Notes:
 go mod init {project-name} #how to create go.mod file

@@ -8,29 +8,31 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
+	"sync"
 )
 
 func ReadScoreFromFile(ctx context.Context) error {
-	filename := ScoreFileName + time.Now().Add(-1*time.Minute).Format("2006-01-02 15:04")
-	readFile, err := os.Open(filename)
+	readFile, err := os.Open(ScoreFileName)
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 	fileScanner := bufio.NewScanner(readFile)
 	fileScanner.Split(bufio.ScanLines)
-
+	var wg sync.WaitGroup
 	for fileScanner.Scan() {
 		scoreRecord := strings.Split(fileScanner.Text(), "|")
 		userId, _ := strconv.Atoi(scoreRecord[0])
 		score, _ := strconv.Atoi(scoreRecord[1])
-		if err := user.UpdateUserScores(ctx, userId, score); err != nil {
-			log.Println(err)
-			continue
-		}
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if err := user.UpdateUserScores(ctx, userId, score); err != nil {
+				log.Println(err.Error())
+			}
+		}()
 	}
-
 	readFile.Close()
+	wg.Wait()
 	return nil
 }

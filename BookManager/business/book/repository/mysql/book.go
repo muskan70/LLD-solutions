@@ -25,7 +25,7 @@ func (brepo *bookRepo) GetAllBooks(ctx context.Context) ([]entity.Book, error) {
 	var book2 []entity.Book
 	db1, err := db.Init()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return nil, err
 	}
 	defer db1.Close()
@@ -33,19 +33,19 @@ func (brepo *bookRepo) GetAllBooks(ctx context.Context) ([]entity.Book, error) {
 	queryBuilder = queryBuilder.From("book")
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return nil, err
 	}
 	rows, err := db1.QueryContext(ctx, query, qargs...)
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
 		var bb entity.Book
 		if err := rows.Scan(&bb.BookID, &bb.Name, &bb.Writer, &bb.Price, &bb.Quantity, &bb.Sold, &bb.InStock, &bb.Status); err != nil {
-			log.Println(err)
+			log.Println(err.Error())
 			return nil, err
 		}
 		book2 = append(book2, bb)
@@ -59,7 +59,7 @@ func (brepo *bookRepo) GetBookById(ctx context.Context, id int) (entity.Book, er
 	var bb entity.Book
 	db1, err := db.Init()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return bb, err
 	}
 	defer db1.Close()
@@ -67,12 +67,12 @@ func (brepo *bookRepo) GetBookById(ctx context.Context, id int) (entity.Book, er
 	queryBuilder = queryBuilder.From("book").Where(sq.Eq{"ID": id})
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return bb, err
 	}
 	rows := db1.QueryRow(query, qargs...)
 	if err = rows.Scan(&bb.BookID, &bb.Name, &bb.Writer, &bb.Price, &bb.Quantity, &bb.Sold, &bb.InStock, &bb.Status); err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return bb, err
 	}
 	return bb, nil
@@ -81,20 +81,20 @@ func (brepo *bookRepo) GetBookById(ctx context.Context, id int) (entity.Book, er
 func (brepo *bookRepo) DeleteBookById(ctx context.Context, id int) error {
 	db1, err := db.Init()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 	defer db1.Close()
 	queryBuilder := sq.Delete("book").Where(sq.Eq{"ID": id})
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 
 	_, err = db1.ExecContext(ctx, query, qargs...)
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 	return nil
@@ -103,14 +103,14 @@ func (brepo *bookRepo) DeleteBookById(ctx context.Context, id int) error {
 func (brepo *bookRepo) AddNewBook(ctx context.Context, req entity.Book) error {
 	db1, err := db.Init()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 	defer db1.Close()
 	queryBuilder := sq.Insert("book").Columns("ID", "book_name", "author", "price", "quantity", "sold", "in_stock", "status").Values(req.BookID, req.Name, req.Writer, req.Price, req.Quantity, 0, req.Quantity, "A")
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 
@@ -125,7 +125,7 @@ func (brepo *bookRepo) AddNewBook(ctx context.Context, req entity.Book) error {
 func (brepo *bookRepo) UpdateDetails(ctx context.Context, req entity.Book) error {
 	db1, err := db.Init()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 	defer db1.Close()
@@ -156,13 +156,13 @@ func (brepo *bookRepo) UpdateDetails(ctx context.Context, req entity.Book) error
 	}
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 
 	_, err2 := db1.ExecContext(ctx, query, qargs...)
 	if err2 != nil {
-		log.Println(err)
+		log.Println(err.Error())
 		return err
 	}
 	return nil

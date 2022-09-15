@@ -14,15 +14,15 @@ func main() {
 	courses = make(map[string]Course)
 
 	if err := admin.AddCourse("C++", []string{}); err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 	}
 
 	if err := admin.AddCourse("Python", []string{"C++"}); err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 	}
 
 	if err := admin.AddCourse("Go", []string{"C++", "Python"}); err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 	}
 	log.Println(courses)
 
@@ -44,7 +44,7 @@ func main() {
 	}
 
 	if err := admin.UpdateCourse("Python", []string{}); err != nil {
-		log.Println(err)
+		log.Println(err.Error())
 	}
 	fmt.Println(courses)
 }

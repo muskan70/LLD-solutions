@@ -10,11 +10,11 @@ import (
 
 func ScoreProcessing() {
 	c := cron.New()
-	c.AddFunc("@every 1m", func() {
+	c.AddFunc("@every 10m", func() {
 		ctx := context.Background()
 		err := score.ReadScoreFromFile(ctx)
 		if err != nil {
-			log.Println(err)
+			log.Println(err.Error())
 			return
 		}
 	})

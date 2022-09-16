@@ -8,7 +8,7 @@ import (
 )
 
 func GetMySqlDBConnection() (*sql.DB, error) {
-	str := "root:1234@13@tcp(127.0.0.1:3306)/intuitMC"
+	str := "root:1234@123@tcp(127.0.0.1:3306)/intuitMC"
 	conn, err := sql.Open("mysql", str)
 	if err != nil {
 		log.Println("Not able to connect", err.Error())

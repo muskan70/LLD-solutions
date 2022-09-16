@@ -74,38 +74,45 @@ func GetUserById(ctx context.Context, id int) (*User, error) {
 
 }
 
-func RegisterUser(ctx context.Context, usr *requests.RegisterUserRequest) error {
+func RegisterUser(ctx context.Context, usr *requests.RegisterUserRequest) (int, error) {
 	db1, err := db.GetMySqlDBConnection()
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return 0, err
 	}
 	defer db1.Close()
 	queryBuilder := squirrel.Insert("user_info").Columns("name", "email", "phone").Values(usr.Name, usr.Email, usr.Phone)
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return 0, err
 	}
 
-	_, err = db1.ExecContext(ctx, query, qargs...)
+	res, err := db1.ExecContext(ctx, query, qargs...)
 	if err != nil {
 		log.Println(err.Error())
-		return err
+		return 0, err
 	}
-	return nil
+	id, _ := res.LastInsertId()
+	return int(id), nil
 
 }
-func UpdateUserScores(ctx context.Context, id, score int) error {
+func UpdateUserScores(ctx context.Context, records map[int]int) error {
 	db1, err := db.GetMySqlDBConnection()
 	if err != nil {
 		log.Println(err.Error())
 		return err
 	}
 	defer db1.Close()
+	var userIds []int
+	caseStmt := squirrel.Case()
+	for id, scr := range records {
+		userIds = append(userIds, id)
+		caseStmt = caseStmt.When(squirrel.Eq{"user_id": id}, squirrel.Expr("score+?", scr))
+	}
 	queryBuilder := squirrel.Update("user_info").
-		Set("score", squirrel.Expr("score+?", score)).
-		Where(squirrel.Eq{"user_id": id})
+		Set("score", caseStmt).
+		Where(squirrel.Eq{"user_id": userIds})
 	query, qargs, err := queryBuilder.ToSql()
 	if err != nil {
 		log.Println(err.Error())

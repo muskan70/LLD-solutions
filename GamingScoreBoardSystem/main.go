@@ -1,17 +1,15 @@
 package main
 
 import (
-	"database/sql"
 	"intuitMc/cron"
 	"intuitMc/domain/score"
 	"intuitMc/domain/user"
 	"intuitMc/requests"
+	"intuitMc/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
-
-var db *sql.DB
 
 func main() {
 	router := gin.Default()
@@ -26,36 +24,37 @@ func main() {
 func getTopScores(c *gin.Context) {
 	users, err := user.GetTopKUserScores(c)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"status": false, "error": err.Error()})
+		c.JSON(http.StatusOK, response.Fail("failed to get top scores", err))
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"status": true, "users": users})
+	c.JSON(http.StatusOK, response.SuccessWithTopScores("successfully fetched top scores", users))
 }
 
 func registerUser(c *gin.Context) {
 	var usr *requests.RegisterUserRequest
 	err := c.BindJSON(&usr)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": false, "error": err.Error()})
+		c.JSON(http.StatusBadRequest, response.Fail("bad request", err))
 		return
 	}
-	if err := user.RegisterUser(c, usr); err != nil {
-		c.JSON(http.StatusOK, gin.H{"status": false, "error": err.Error()})
+	userId, err := user.RegisterUser(c, usr)
+	if err != nil {
+		c.JSON(http.StatusOK, response.Fail("failed to register User", err))
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"status": true})
+	c.JSON(http.StatusOK, response.SuccessWithUserId("successfully registered user", userId))
 }
 
 func pushScoresToFile(c *gin.Context) {
 	var scr *requests.PushScoreRequest
 	err := c.BindJSON(&scr)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": false, "error": err.Error()})
+		c.JSON(http.StatusBadRequest, response.Fail("bad requerst", err))
 		return
 	}
 	if err := score.PushScoreToFile(c, scr); err != nil {
-		c.JSON(http.StatusOK, gin.H{"status": false, "error": err.Error()})
+		c.JSON(http.StatusOK, response.Fail("failed to push scores to File", err))
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"status": true})
+	c.JSON(http.StatusOK, response.Success("Scores pushed successfully"))
 }

@@ -1,0 +1,25 @@
+package constants
+
+const (
+	JTYPE_SNAKE = iota + 1
+	JTYPE_LADDER
+	JTYPE_CROCODILE
+	JTYPE_MINE
+)
+
+const (
+	MOVEMENT_STRATEGY_SUM = "SUM"
+	MOVEMENT_STRATEGY_MIN = "MIN"
+	MOVEMENT_STRATEGY_MAX = "MAX"
+)
+
+const (
+	GAME_STATUS_NOT_STARTED = iota + 1
+	GAME_STATUS_IN_PROGRESS
+	GAME_STATUS_WON
+)
+
+const (
+	DICE_ENTRY_MANUALLY  = "manually"
+	DICE_ENTRY_AUTOMATED = "automated"
+)

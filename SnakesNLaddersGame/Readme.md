@@ -19,6 +19,8 @@ Step 3: ./snakesNLadders
 6. Ladder
 7. Crocodile
 8. Mine
+
 ### Interface used
 1. IJumper
+2. IMovementStrategy
 

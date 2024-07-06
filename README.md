@@ -10,6 +10,7 @@
 9. Gaming Score Board System
 10. Tic Tac Toe Game
 11. Movie Ticket Booking System
+12. Snakes and Ladders Game
 
 Notes:
 go mod init {project-name} #how to create go.mod file

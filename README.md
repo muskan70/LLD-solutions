@@ -11,6 +11,7 @@
 10. Tic Tac Toe Game
 11. Movie Ticket Booking System
 12. Snakes and Ladders Game
+13. Publisher Subscriber System : Pull Based Architecture
 
 Notes:
 go mod init {project-name} #how to create go.mod file

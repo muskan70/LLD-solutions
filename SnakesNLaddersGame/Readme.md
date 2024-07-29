@@ -10,6 +10,7 @@ Step 3: ./snakesNLadders
 - MultiDice game with movement strategy (SUM, MIN, MAX) can be modified through GameDetails.json
 
 ## Factory Pattern is used to create Jumpers (snakes, ladders, crocodiles, mines)
+
 ### Classes used:
 1. Player
 2. Dice

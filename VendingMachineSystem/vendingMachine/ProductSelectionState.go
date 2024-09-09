@@ -2,6 +2,7 @@ package machine
 
 import (
 	"errors"
+	"fmt"
 	"vending/coin"
 	"vending/inventory"
 )
@@ -22,15 +23,23 @@ func (ps *ProductSelectionState) ClickOnProductSelectionButton() error {
 func (ps *ProductSelectionState) ChooseProduct(itm *inventory.Item) error {
 	err := ps.mchn.CheckProductAvailabiltyNPrice(itm)
 	if err != nil {
+		fmt.Println(err)
+		ps.mchn.SetStatus(&IdleState{mchne: ps.mchn})
+		ps.mchn.RefundCoins()
 		return err
 	}
-	ps.mchn.SetStatus(&DispenseProductState{})
+	fmt.Println("Product selected")
+	ps.mchn.SetStatus(&DispenseProductState{mchn: ps.mchn})
+	coins := ps.mchn.ReturnChange(itm)
+	if coins > 0 {
+		fmt.Println("Returned remaining change:", coins)
+	}
 	return nil
 }
-func (idl *ProductSelectionState) CancelButtonOrRefundCoins() error {
-	idl.mchn.RefundCoins()
+func (ps *ProductSelectionState) CancelButtonOrRefundCoins() error {
+	ps.mchn.RefundCoins()
 	return nil
 }
-func (idl *ProductSelectionState) DispenseProduct(itm *inventory.Item) error {
+func (ps *ProductSelectionState) DispenseProduct(itm *inventory.Item) error {
 	return errors.New("Product cannot be dispensed at this state")
 }

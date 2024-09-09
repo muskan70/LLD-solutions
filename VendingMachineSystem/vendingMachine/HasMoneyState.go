@@ -18,7 +18,7 @@ func (idl *HasMoneyState) InsertCoins(c *coin.Coin) error {
 	return nil
 }
 func (idl *HasMoneyState) ClickOnProductSelectionButton() error {
-	idl.mchn.SetStatus(&ProductSelectionState{})
+	idl.mchn.SetStatus(&ProductSelectionState{mchn: idl.mchn})
 	return nil
 }
 func (idl *HasMoneyState) ChooseProduct(itm *inventory.Item) error {

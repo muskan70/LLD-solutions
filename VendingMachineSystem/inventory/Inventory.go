@@ -1,30 +1,37 @@
 package inventory
 
+import "fmt"
+
 type Inventory struct {
-	ItemMap map[*Item]int
+	ItemMap map[string]int
 }
 
 func NewInventory() *Inventory {
-	return &Inventory{ItemMap: make(map[*Item]int)}
+	return &Inventory{ItemMap: make(map[string]int)}
 }
 
 func (i *Inventory) AddNewItem(it *Item, qty int) {
-	i.ItemMap[it] = qty
+	i.ItemMap[it.Name] = qty
 }
 
 func (i *Inventory) UpdateInventory(it *Item) {
-	i.ItemMap[it] = i.ItemMap[it] - 1
+	i.ItemMap[it.Name] = i.ItemMap[it.Name] - 1
 }
 
 func (i *Inventory) CheckItemAvailability(it *Item) bool {
-	return i.ItemMap[it] > 0
+	fmt.Println(i.ItemMap[it.Name])
+	return i.ItemMap[it.Name] > 0
 }
 
 func (i *Inventory) FillInventory() {
-	cd := 0
-	for itmNm, itmDetails := range ItemMap {
-		it := NewItem(itmNm, itmDetails[0], cd, itmDetails[1])
-		i.ItemMap[it] = 5
-		cd++
+	for itmNm := range ItemMap {
+		it := NewItem(itmNm)
+		i.ItemMap[it.Name] = 5
+	}
+}
+
+func (i *Inventory) DisplayInventory() {
+	for itm, qty := range i.ItemMap {
+		fmt.Println(itm, qty)
 	}
 }

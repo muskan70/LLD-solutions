@@ -11,7 +11,7 @@ type IdleState struct {
 }
 
 func (idl *IdleState) ClickOnInsertCoinButton() error {
-	idl.mchne.SetStatus(&HasMoneyState{})
+	idl.mchne.SetStatus(&HasMoneyState{mchn: idl.mchne})
 	return nil
 }
 func (idl *IdleState) InsertCoins(c *coin.Coin) error {

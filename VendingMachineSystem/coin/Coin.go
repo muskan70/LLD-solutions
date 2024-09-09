@@ -8,17 +8,17 @@ const (
 )
 
 type Coin struct {
-	coinType int
+	CoinType int
 }
 
 func (c *Coin) GetValue() int {
-	return c.coinType
+	return c.CoinType
 }
 
 func GetTotalCoinsValue(c []*Coin) int {
 	total := 0
 	for i := range c {
-		total = total + c[i].coinType
+		total = total + c[i].CoinType
 	}
 	return total
 }

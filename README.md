@@ -1,6 +1,6 @@
 # LLD-solutions
 1. N-elevator System
-2. Build in Cache Library
+2. Build in Cache Library : Strategy Design Pattern
 3. Gym Centre System Flipkart Ques
 4. Splitwise
 5. Parking Lot
@@ -10,10 +10,11 @@
 9. Gaming Score Board System
 10. Tic Tac Toe Game
 11. Movie Ticket Booking System
-12. Snakes and Ladders Game
-13. Publisher Subscriber System : Pull Based Architecture
+12. Snakes and Ladders Game : Factory Design Pattern
+13. Publisher Subscriber System : Pull Based Architecture, Observer Design Pattern
 14. Concurrent Workers
-15. Unix file search API
+15. Unix file search API : Specification Design Pattern
+16. Vending Machine : State Design Pattern, Singleton Pattern
 
 Notes:
 go mod init {project-name} #how to create go.mod file

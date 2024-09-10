@@ -2,17 +2,17 @@ package search
 
 import (
 	"file-search/criteria"
-	"file-search/file"
+	"file-search/fileSystem"
 )
 
 type FileSearchService struct {
-	Directories  []*file.File
+	Directories  []fileSystem.FileSystem
 	SearchParams criteria.ICriteria
 }
 
-func (fs *FileSearchService) Search() []*file.File {
+func (fs *FileSearchService) Search() []fileSystem.FileSystem {
 	i := 0
-	var files []*file.File
+	var files []fileSystem.FileSystem
 	for i < len(fs.Directories) {
 		children := fs.Directories[i].GetChildren()
 		for _, child := range children {

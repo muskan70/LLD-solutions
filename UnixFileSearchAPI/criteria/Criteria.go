@@ -1,6 +1,8 @@
 package criteria
 
-import "file-search/file"
+import (
+	"file-search/fileSystem"
+)
 
 const (
 	Equal            = "="
@@ -16,7 +18,7 @@ func NewNameCriteria(n string) ICriteria {
 	return &NameCriteria{Name: n}
 }
 
-func (n *NameCriteria) IsSatifiedBy(f *file.File) bool {
+func (n *NameCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
 	return n.Name == f.GetName()
 }
 
@@ -29,7 +31,7 @@ func NewSizeCriteria(s int, op string) ICriteria {
 	return &SizeCriteria{Size: s, Operator: op}
 }
 
-func (s *SizeCriteria) IsSatifiedBy(f *file.File) bool {
+func (s *SizeCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
 	if s.Operator == Equal {
 		return s.Size == f.GetSize()
 	} else if s.Operator == LessThanEqual {
@@ -48,6 +50,6 @@ func NewExtensionCriteria(e string) ICriteria {
 	return &ExtensionCriteria{Ext: e}
 }
 
-func (e *ExtensionCriteria) IsSatifiedBy(f *file.File) bool {
+func (e *ExtensionCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
 	return e.Ext == f.GetExtension()
 }

@@ -1,9 +1,11 @@
 package criteria
 
-import "file-search/file"
+import (
+	"file-search/fileSystem"
+)
 
 type ICriteria interface {
-	IsSatifiedBy(f *file.File) bool
+	IsSatifiedBy(f fileSystem.FileSystem) bool
 }
 
 type AndCriteria struct {
@@ -14,7 +16,7 @@ func NewAndCriteria(c []ICriteria) ICriteria {
 	return &AndCriteria{Criterias: c}
 }
 
-func (a *AndCriteria) IsSatifiedBy(f *file.File) bool {
+func (a *AndCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
 	for _, criteria := range a.Criterias {
 		if !criteria.IsSatifiedBy(f) {
 			return false
@@ -31,7 +33,7 @@ func NewOrCriteria(c []ICriteria) ICriteria {
 	return &OrCriteria{Criterias: c}
 }
 
-func (o *OrCriteria) IsSatifiedBy(f *file.File) bool {
+func (o *OrCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
 	for _, criteria := range o.Criterias {
 		if criteria.IsSatifiedBy(f) {
 			return true

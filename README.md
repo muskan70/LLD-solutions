@@ -13,7 +13,7 @@
 12. Snakes and Ladders Game : Factory Design Pattern
 13. Publisher Subscriber System : Pull Based Architecture, Observer Design Pattern
 14. Concurrent Workers
-15. Unix file search API : Specification Design Pattern
+15. Unix file search API : Composite Design Pattern, Specification Design Pattern
 16. Vending Machine : State Design Pattern, Singleton Pattern
 
 Notes:

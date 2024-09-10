@@ -21,7 +21,7 @@ func main() {
 	spec2 := criteria.NewExtensionCriteria("txt")
 	spec := criteria.NewAndCriteria([]criteria.ICriteria{spec1, spec2})
 
-	fs := search.FileSearchService{Directories: []fileSystem.FileSystem{rootDir}, SearchParams: spec}
+	fs := search.FileSearchService{Directories: []fileSystem.Directory{*rootDir}, SearchParams: spec}
 	files := fs.Search()
 
 	for i := range files {

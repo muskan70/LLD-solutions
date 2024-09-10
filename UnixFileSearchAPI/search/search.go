@@ -6,7 +6,7 @@ import (
 )
 
 type FileSearchService struct {
-	Directories  []fileSystem.FileSystem
+	Directories  []fileSystem.Directory
 	SearchParams criteria.ICriteria
 }
 
@@ -17,8 +17,8 @@ func (fs *FileSearchService) Search() []fileSystem.FileSystem {
 		children := fs.Directories[i].GetChildren()
 		for _, child := range children {
 			if child.IsDirectory() {
-				fs.Directories = append(fs.Directories, child)
-			} else if fs.SearchParams.IsSatifiedBy(child) {
+				fs.Directories = append(fs.Directories, *child.(*fileSystem.Directory))
+			} else if fs.SearchParams.IsSatifiedBy(*child.(*fileSystem.File)) {
 				files = append(files, child)
 			}
 		}

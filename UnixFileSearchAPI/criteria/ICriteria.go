@@ -5,7 +5,7 @@ import (
 )
 
 type ICriteria interface {
-	IsSatifiedBy(f fileSystem.FileSystem) bool
+	IsSatifiedBy(f fileSystem.File) bool
 }
 
 type AndCriteria struct {
@@ -16,7 +16,7 @@ func NewAndCriteria(c []ICriteria) ICriteria {
 	return &AndCriteria{Criterias: c}
 }
 
-func (a *AndCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
+func (a *AndCriteria) IsSatifiedBy(f fileSystem.File) bool {
 	for _, criteria := range a.Criterias {
 		if !criteria.IsSatifiedBy(f) {
 			return false
@@ -33,7 +33,7 @@ func NewOrCriteria(c []ICriteria) ICriteria {
 	return &OrCriteria{Criterias: c}
 }
 
-func (o *OrCriteria) IsSatifiedBy(f fileSystem.FileSystem) bool {
+func (o *OrCriteria) IsSatifiedBy(f fileSystem.File) bool {
 	for _, criteria := range o.Criterias {
 		if criteria.IsSatifiedBy(f) {
 			return true

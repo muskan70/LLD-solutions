@@ -4,9 +4,6 @@ import "strings"
 
 type FileSystem interface {
 	GetName() string
-	GetChildren() []FileSystem
-	GetSize() int
-	GetExtension() string
 	IsDirectory() bool
 }
 
@@ -48,10 +45,6 @@ func (f *File) GetExtension() string {
 	return f.Extension
 }
 
-func (f *File) GetChildren() []FileSystem {
-	return nil
-}
-
 type Directory struct {
 	Name     string
 	Children []FileSystem
@@ -66,14 +59,6 @@ func NewDirectory(name string, bytes int) *Directory {
 
 func (d *Directory) GetName() string {
 	return d.Name
-}
-
-func (d *Directory) GetSize() int {
-	return 0
-}
-
-func (d *Directory) GetExtension() string {
-	return ""
 }
 
 func (d *Directory) IsDirectory() bool {

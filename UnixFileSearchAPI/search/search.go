@@ -18,7 +18,7 @@ func (fs *FileSearchService) Search() []fileSystem.FileSystem {
 		for _, child := range children {
 			if child.IsDirectory() {
 				fs.Directories = append(fs.Directories, *child.(*fileSystem.Directory))
-			} else if fs.SearchParams.IsSatifiedBy(*child.(*fileSystem.File)) {
+			} else if fs.SearchParams.IsSatisfiedBy(*child.(*fileSystem.File)) {
 				files = append(files, child)
 			}
 		}

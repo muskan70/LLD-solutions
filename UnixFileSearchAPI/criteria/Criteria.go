@@ -18,7 +18,7 @@ func NewNameCriteria(n string) ICriteria {
 	return &NameCriteria{Name: n}
 }
 
-func (n *NameCriteria) IsSatifiedBy(f fileSystem.File) bool {
+func (n *NameCriteria) IsSatisfiedBy(f fileSystem.File) bool {
 	return n.Name == f.GetName()
 }
 
@@ -31,13 +31,13 @@ func NewSizeCriteria(s int, op string) ICriteria {
 	return &SizeCriteria{Size: s, Operator: op}
 }
 
-func (s *SizeCriteria) IsSatifiedBy(f fileSystem.File) bool {
+func (s *SizeCriteria) IsSatisfiedBy(f fileSystem.File) bool {
 	if s.Operator == Equal {
 		return s.Size == f.GetSize()
 	} else if s.Operator == LessThanEqual {
-		return s.Size <= f.GetSize()
+		return f.GetSize() <= s.Size
 	} else if s.Operator == GreaterThanEqual {
-		return s.Size >= f.GetSize()
+		return f.GetSize() >= s.Size
 	}
 	return false
 }
@@ -50,6 +50,6 @@ func NewExtensionCriteria(e string) ICriteria {
 	return &ExtensionCriteria{Ext: e}
 }
 
-func (e *ExtensionCriteria) IsSatifiedBy(f fileSystem.File) bool {
+func (e *ExtensionCriteria) IsSatisfiedBy(f fileSystem.File) bool {
 	return e.Ext == f.GetExtension()
 }

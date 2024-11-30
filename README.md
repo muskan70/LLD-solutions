@@ -15,6 +15,7 @@
 14. Concurrent Workers
 15. Unix file search API : Composite Design Pattern, Specification Design Pattern
 16. Vending Machine : State Design Pattern, Singleton Pattern
+17. Stack Overflow
 
 Notes:
 go mod init {project-name} #how to create go.mod file

@@ -2,6 +2,10 @@ package main
 
 import "time"
 
+type Commentable interface {
+	AddComment(authorId int, content string) *Comment
+}
+
 type Comment struct {
 	Id           int
 	ParentId     int
@@ -12,10 +16,11 @@ type Comment struct {
 }
 
 var commentId = 0
+var Comments = make(map[int]*Comment)
 
 func NewComment(parentId int, parentType string, authorId int, content string) *Comment {
 	commentId++
-	return &Comment{
+	comm := &Comment{
 		Id:           commentId,
 		ParentId:     parentId,
 		AuthorId:     authorId,
@@ -23,4 +28,6 @@ func NewComment(parentId int, parentType string, authorId int, content string) *
 		Content:      content,
 		CreationDate: time.Now(),
 	}
+	Comments[commentId] = comm
+	return comm
 }

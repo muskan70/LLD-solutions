@@ -22,12 +22,27 @@ func (lfu *LFUEviction) KeyAccessed(key string) {
 		lfu.freqListMap[freq].RemoveKey(key)
 	}
 	lfu.keyFreqMap[key] = freq + 1
-	lfu.minFreq = min(lfu.keyFreqMap[key], lfu.minFreq)
+	if lfu.minFreq == 0 {
+		lfu.minFreq = 1
+	} else {
+		lfu.minFreq = min(lfu.keyFreqMap[key], lfu.minFreq)
+	}
+	_, ok = lfu.freqListMap[freq+1]
+	if !ok {
+		lfu.freqListMap[freq+1] = ds.NewDoubleLinkedList()
+	}
 	lfu.freqListMap[freq+1].AddNodeAtEnd(key)
 }
 
 func (lfu *LFUEviction) EvictKey() string {
 	key := lfu.freqListMap[lfu.minFreq].RemoveNodeAtHead()
 	delete(lfu.keyFreqMap, key)
+	if len(lfu.keyFreqMap) == 0 {
+		lfu.minFreq = 0
+	} else {
+		for lfu.freqListMap[lfu.minFreq].IsEmpty() {
+			lfu.minFreq++
+		}
+	}
 	return key
 }

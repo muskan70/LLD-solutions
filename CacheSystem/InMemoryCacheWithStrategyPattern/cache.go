@@ -1,6 +1,9 @@
 package main
 
-import "cacheStrategy/eviction"
+import (
+	"cacheStrategy/eviction"
+	"fmt"
+)
 
 type Cache struct {
 	size    int
@@ -9,19 +12,23 @@ type Cache struct {
 	evict   eviction.IEvictionPolicy
 }
 
-func NewCache(sz int, evictionPolicy *eviction.IEvictionPolicy) *Cache {
-	return &Cache{size: sz, curSize: 0, store: make(map[string]interface{}), evict: *evictionPolicy}
+func NewCache(sz int, evictionPolicy eviction.IEvictionPolicy) *Cache {
+	return &Cache{size: sz, curSize: 0, store: make(map[string]interface{}), evict: evictionPolicy}
 }
 
 func (c *Cache) Put(key string, val interface{}) {
+	fmt.Println(c.curSize)
 	if c.curSize == c.size {
 		c.curSize--
 		ele := c.evict.EvictKey()
 		delete(c.store, ele)
 	}
-	c.curSize++
+	if _, ok := c.store[key]; !ok {
+		c.curSize++
+	}
 	c.store[key] = val
 	c.evict.KeyAccessed(key)
+	c.PrintAll()
 }
 
 func (c *Cache) Get(key string) interface{} {
@@ -30,4 +37,12 @@ func (c *Cache) Get(key string) interface{} {
 		c.evict.KeyAccessed(key)
 	}
 	return val
+}
+
+func (c *Cache) PrintAll() {
+	fmt.Println("###############")
+	for key, val := range c.store {
+		fmt.Println(key, val)
+	}
+	fmt.Println("###############")
 }

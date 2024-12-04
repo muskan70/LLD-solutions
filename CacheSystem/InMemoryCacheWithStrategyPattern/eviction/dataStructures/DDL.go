@@ -36,7 +36,12 @@ func (d *DoubleLinkedList) AddNodeAtEnd(x string) *Node {
 }
 
 func (d *DoubleLinkedList) RemoveNodeAtHead() string {
-	if d.head != nil {
+	if d.head == d.tail {
+		n := d.head
+		d.head = nil
+		d.tail = nil
+		return n.val
+	} else if d.head != nil {
 		n := d.head
 		d.head = d.head.next
 		n.next = nil
@@ -80,4 +85,8 @@ func (d *DoubleLinkedList) RemoveKey(key string) {
 			}
 		}
 	}
+}
+
+func (d *DoubleLinkedList) IsEmpty() bool {
+	return d.head == d.tail && d.head == nil
 }

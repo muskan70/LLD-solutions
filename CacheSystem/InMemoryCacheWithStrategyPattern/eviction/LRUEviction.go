@@ -18,7 +18,8 @@ func (lru *LRUEviction) KeyAccessed(key string) {
 	if pos, ok := lru.keyPosMap[key]; ok {
 		lru.ddl.RemoveNode(pos)
 	}
-	lru.ddl.AddNodeAtEnd(key)
+	pos := lru.ddl.AddNodeAtEnd(key)
+	lru.keyPosMap[key] = pos
 }
 func (lru *LRUEviction) EvictKey() string {
 	return lru.ddl.RemoveNodeAtHead()

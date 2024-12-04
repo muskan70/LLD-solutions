@@ -22,8 +22,9 @@ func (c *Cache) Put(key string, value interface{}) {
 		m := c.evic.EvictKey()
 		c.stg.Remove(m)
 	}
-	c.curSize++
-	c.stg.Add(key, value)
+	if c.stg.Add(key, value) {
+		c.curSize++
+	}
 	c.evic.KeyAccessed(key)
 	c.stg.PrintAll()
 }

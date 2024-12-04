@@ -12,8 +12,13 @@ func NewHashmapStorage() IStorage {
 	return &HashmapStorage{hmap: make(map[string]interface{})}
 }
 
-func (hs *HashmapStorage) Add(key string, value interface{}) {
+func (hs *HashmapStorage) Add(key string, value interface{}) bool {
+	newKey := false
+	if _, ok := hs.hmap[key]; !ok {
+		newKey = true
+	}
 	hs.hmap[key] = value
+	return newKey
 }
 
 func (hs *HashmapStorage) Remove(key string) {

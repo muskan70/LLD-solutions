@@ -61,3 +61,23 @@ func (d *DoubleLinkedList) RemoveNode(n *Node) {
 		n.prev.next = n.next
 	}
 }
+
+func (d *DoubleLinkedList) RemoveKey(key string) {
+	if d.head.val == key && d.tail.val == key {
+		d.head = nil
+		d.tail = nil
+	} else if d.head.val == key {
+		d.head = d.head.next
+		d.head.prev = nil
+	} else if d.tail.val == key {
+		d.tail = d.tail.prev
+		d.tail.next = nil
+	} else {
+		for temp := d.head; temp != nil; temp = temp.next {
+			if temp.val == key {
+				temp.next.prev = temp.prev
+				temp.prev.next = temp.next
+			}
+		}
+	}
+}

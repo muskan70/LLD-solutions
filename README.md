@@ -16,6 +16,9 @@
 15. Unix file search API : Composite Design Pattern, Specification Design Pattern
 16. Vending Machine : State Design Pattern, Singleton Pattern
 17. Stack Overflow
+18. Logging System
+19. Chat Server App
+20. NotifyMe Functionality
 
 Notes:
 go mod init {project-name} #how to create go.mod file

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 	"time"
 )
 
@@ -21,14 +20,10 @@ func NewMessage(logLevel int, content, namespace string) Message {
 	}
 }
 
-func (m *Message) Log(wg *sync.WaitGroup) {
+func (m *Message) Log() {
 	m.Timestamp = time.Now()
-	logConfig[m.Namespace].SinkLocation.AddLog(*m, wg)
-	if m.LogLevel >= logConfig[m.Namespace].LogLevel {
-		fmt.Println(logConfig[m.Namespace].SinkType, GetLogLevel(m.LogLevel), m.Timestamp, m.Content, m.Namespace)
-	} else {
-		fmt.Println("This log level is below configured Loglevel:", GetLogLevel(m.LogLevel))
-	}
+	logConfig[m.Namespace].SinkLocation.WG.Add(1)
+	go logConfig[m.Namespace].SinkLocation.AddLog(*m)
 }
 
 func (m *Message) Show() {

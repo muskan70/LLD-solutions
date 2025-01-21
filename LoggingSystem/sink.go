@@ -1,25 +1,32 @@
 package main
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 type LogSink struct {
 	Namespace string
 	messages  []Message
-	//WG       *sync.WaitGroup
+	WG        *sync.WaitGroup
 }
 
 func NewSink(namespace string) *LogSink {
 	return &LogSink{
 		Namespace: namespace,
 		messages:  []Message{},
-		//WG:       new(sync.WaitGroup),
+		WG:        new(sync.WaitGroup),
 	}
 }
 
-func (s *LogSink) AddLog(msg Message, wg *sync.WaitGroup) {
-	//s.WG.Add(1)
+func (s *LogSink) AddLog(msg Message) {
 	s.messages = append(s.messages, msg)
-	wg.Done()
+	if msg.LogLevel >= logConfig[msg.Namespace].LogLevel {
+		fmt.Println(logConfig[msg.Namespace].SinkType, GetLogLevel(msg.LogLevel), msg.Timestamp, msg.Content, msg.Namespace)
+	} else {
+		fmt.Println("This log level is below configured Loglevel:", GetLogLevel(msg.LogLevel))
+	}
+	s.WG.Done()
 }
 
 func (s *LogSink) ShowMessages() {

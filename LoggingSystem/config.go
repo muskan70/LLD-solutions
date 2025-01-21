@@ -1,7 +1,5 @@
 package main
 
-import "sync"
-
 const (
 	LogLevelFATAL    = 5
 	LogLevelERROR    = 4
@@ -32,21 +30,19 @@ func GetLogLevel(level int) string {
 type LogConfig struct {
 	LogLevel     int
 	SinkType     string
-	SinkLocation map[int]*LogSink
+	SinkLocation *LogSink
 }
 
-var logConfig LogConfig
+var logConfig = make(map[string]*LogConfig)
 
-func AddConfig(level int, sinkType string) LogConfig {
-	logConfig = LogConfig{
+func AddConfig(level int, sinkType string, namespace string) {
+	logConfig[namespace] = &LogConfig{
 		LogLevel:     level,
 		SinkType:     sinkType,
-		SinkLocation: CreateLogSink(),
+		SinkLocation: NewSink(namespace),
 	}
-	return logConfig
 }
 
-func (c *LogConfig) SetLogLevel(level int, wg *sync.WaitGroup) {
-	wg.Wait()
+func (c *LogConfig) SetLogLevel(level int) {
 	c.LogLevel = level
 }

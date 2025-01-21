@@ -23,13 +23,12 @@ func NewMessage(logLevel int, content, namespace string) Message {
 
 func (m *Message) Log(wg *sync.WaitGroup) {
 	m.Timestamp = time.Now()
-	logConfig.SinkLocation[m.LogLevel].AddLog(*m)
-	if m.LogLevel >= logConfig.LogLevel {
-		fmt.Println(logConfig.SinkType, GetLogLevel(m.LogLevel), m.Timestamp, m.Content, m.Namespace)
+	logConfig[m.Namespace].SinkLocation.AddLog(*m, wg)
+	if m.LogLevel >= logConfig[m.Namespace].LogLevel {
+		fmt.Println(logConfig[m.Namespace].SinkType, GetLogLevel(m.LogLevel), m.Timestamp, m.Content, m.Namespace)
 	} else {
 		fmt.Println("This log level is below configured Loglevel:", GetLogLevel(m.LogLevel))
 	}
-	wg.Done()
 }
 
 func (m *Message) Show() {

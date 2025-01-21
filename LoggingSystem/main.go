@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	AddConfig(LogLevelINFO, SinkTypeCONSOLE)
+	AddConfig(LogLevelINFO, SinkTypeCONSOLE, "CART")
+	AddConfig(LogLevelDEBUG, SinkTypeCONSOLE, "ORDER")
 	WG := new(sync.WaitGroup)
 	WG.Add(5)
 
@@ -19,13 +20,15 @@ func main() {
 	msg3 := NewMessage(LogLevelWARN, "Item stack empty", "CART")
 	go msg3.Log(WG)
 
+	logConfig["CART"].SetLogLevel(LogLevelWARN)
+
 	msg4 := NewMessage(LogLevelERROR, "Failed to add item to cart", "CART")
 	go msg4.Log(WG)
 
 	msg5 := NewMessage(LogLevelDEBUG, "Debugging add item to cart flow", "CART")
 	go msg5.Log(WG)
 
-	logConfig.SetLogLevel(LogLevelWARN, WG)
+	WG.Wait()
 	WG.Add(5)
 
 	msg1 = NewMessage(LogLevelFATAL, "Panic occured while payment", "ORDER")
@@ -46,10 +49,10 @@ func main() {
 	WG.Wait()
 
 	fmt.Println("---------------------------------------------------------------------")
-	for i := 5; i > 0; i-- {
-		fmt.Println(GetLogLevel(i))
+	for key := range logConfig {
+		fmt.Println(key)
 		//logConfig.SinkLocation[i].WG.Wait()
-		logConfig.SinkLocation[i].ShowMessages()
+		logConfig[key].SinkLocation.ShowMessages()
 		fmt.Println("################################################################")
 	}
 

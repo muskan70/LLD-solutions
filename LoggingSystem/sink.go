@@ -1,33 +1,25 @@
 package main
 
+import "sync"
+
 type LogSink struct {
-	LogLevel int
-	messages []Message
+	Namespace string
+	messages  []Message
 	//WG       *sync.WaitGroup
 }
 
-func NewSink(level int) *LogSink {
+func NewSink(namespace string) *LogSink {
 	return &LogSink{
-		LogLevel: level,
-		messages: []Message{},
+		Namespace: namespace,
+		messages:  []Message{},
 		//WG:       new(sync.WaitGroup),
 	}
 }
 
-func CreateLogSink() map[int]*LogSink {
-	return map[int]*LogSink{
-		LogLevelFATAL: NewSink(LogLevelFATAL),
-		LogLevelERROR: NewSink(LogLevelERROR),
-		LogLevelWARN:  NewSink(LogLevelWARN),
-		LogLevelINFO:  NewSink(LogLevelINFO),
-		LogLevelDEBUG: NewSink(LogLevelDEBUG),
-	}
-}
-
-func (s *LogSink) AddLog(msg Message) {
+func (s *LogSink) AddLog(msg Message, wg *sync.WaitGroup) {
 	//s.WG.Add(1)
 	s.messages = append(s.messages, msg)
-	//s.WG.Done()
+	wg.Done()
 }
 
 func (s *LogSink) ShowMessages() {

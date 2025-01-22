@@ -13,7 +13,7 @@ Client/application make use of your logger library to log messages to a sink
 #### Logger library
 1. Requires configuration during sink setup
 2. Accepts messages from client(s)
-3. Routes messages to appropriate sink based on the level
+3. Routes messages to appropriate sink based on the namespace
 4. Supports following message level in the order of priority: FATAL, ERROR WARN, INFO,
 DEBUG.
     a. Message levels with higher priority above a given message level should be logged.
@@ -23,7 +23,6 @@ DEBUG.
 6. Should not impact the application flow.
 #### Sending messages
 1. Sink need not be mentioned while sending a message to the logger library.
-2. A message level has a 1:1 mapping with sink.
 3. Client specifies message content, level and namespace while sending a message
 #### Logger configuration (see sample below)
 1. Specifies all the details required to use the logger library.

@@ -1,51 +1,28 @@
 package main
 
 import (
-	"fmt"
+	"logSys/constants"
 )
 
 func main() {
-	AddConfig(LogLevelINFO, SinkTypeCONSOLE, "CART")
-	AddConfig(LogLevelDEBUG, SinkTypeCONSOLE, "ORDER")
+	cartlogger := NewLogger(NewConfig(constants.LogLevelINFO, constants.SinkTypeCONSOLE), "CART")
+	orderlogger := NewLogger(NewConfig(constants.LogLevelDEBUG, constants.SinkTypeCONSOLE), "ORDER")
 
-	msg1 := NewMessage(LogLevelFATAL, "Panic occured while adding promo", "CART")
-	msg1.Log()
+	cartlogger.Fatal("Panic occured while adding promo")
+	cartlogger.Info("Successfully added item")
+	cartlogger.Warn("Item stack empty")
 
-	msg2 := NewMessage(LogLevelINFO, "Successfully added item", "CART")
-	msg2.Log()
+	cartlogger.Config.SetLogLevel(constants.LogLevelWARN)
+	cartlogger.Error("Failed to add item to cart")
+	cartlogger.Debug("Debugging add item to cart flow")
 
-	msg3 := NewMessage(LogLevelWARN, "Item stack empty", "CART")
-	msg3.Log()
+	orderlogger.Fatal("Panic occured while payment")
+	orderlogger.Info("Successfully placed order")
+	orderlogger.Warn("Item stack empty, no items to checkout")
+	orderlogger.Error("Failed to CHECKOUT")
+	orderlogger.Debug("Debugging checkout flow")
 
-	logConfig["CART"].SetLogLevel(LogLevelWARN)
-
-	msg4 := NewMessage(LogLevelERROR, "Failed to add item to cart", "CART")
-	msg4.Log()
-
-	msg5 := NewMessage(LogLevelDEBUG, "Debugging add item to cart flow", "CART")
-	msg5.Log()
-
-	msg1 = NewMessage(LogLevelFATAL, "Panic occured while payment", "ORDER")
-	msg1.Log()
-
-	msg2 = NewMessage(LogLevelINFO, "Successfully placed order", "ORDER")
-	msg2.Log()
-
-	msg3 = NewMessage(LogLevelWARN, "Item stack empty, no items to checkout", "ORDER")
-	msg3.Log()
-
-	msg4 = NewMessage(LogLevelERROR, "Failed to CHECKOUT", "ORDER")
-	msg4.Log()
-
-	msg5 = NewMessage(LogLevelDEBUG, "Debugging checkout flow", "ORDER")
-	msg5.Log()
-
-	for key := range logConfig {
-		logConfig[key].SinkLocation.WG.Wait()
-		fmt.Println("---------------------------------------------------------------------")
-		fmt.Println(key)
-		logConfig[key].SinkLocation.ShowMessages()
-		fmt.Println("################################################################")
-	}
+	cartlogger.Show()
+	orderlogger.Show()
 
 }

@@ -1,4 +1,4 @@
-# LLD-solutions
+## LLD-solutions
 1. N-elevator System
 2. Build in Cache Library : Strategy Design Pattern
 3. Gym Centre System Flipkart Ques
@@ -18,7 +18,6 @@
 17. Stack Overflow
 18. Logging System
 19. Chat Server App
-20. NotifyMe Functionality
 
-Notes:
-go mod init {project-name} #how to create go.mod file
+> Notes:
+> - create go.mod file : go mod init {project-name}

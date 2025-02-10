@@ -8,82 +8,52 @@ This is the bare minimum solution which is expected for the problem. You can add
 
 Make sure your code is readable and maintainable and preferably object oriented. It should be modular and extensible, to add new features if needed.
 
-Sample input and output:
-No. of players for each team: 5
-No. of overs: 2
-Batting Order for team 1:
-P1
-P2
-P3
-P4
-P5
-Over 1:
-1
-1
-1
-1
-1
-2
-Scorecard for Team 1:
-Player Name Score 4s 6s Balls
-P1* 3 0 0 3
-P2* 4 0 0 3
-P3 0 0 0 0
-P4 0 0 0 0
-P5 0 0 0 0
-Total: 7/0
-Overs: 1
-Over 2:
-W
-4
-4
-Wd
-W
-1
-6
-Scorecard for Team 1:
-Player Name Score 4s 6s Balls
-P1 3 0 0 4
-P2* 10 0 1 4
-P3 8 2 0 3
-P4* 1 0 0 1
-P5 0 0 0 0
-Total: 23/2
-Overs: 2
-Batting Order for team 2:
-P6
-P7
-P8
-P9
-P10
-Over 1:
-4
-6
-W
-W
-1
-1
-Scorecard for Team 2:
-Player Name Score 4s 6s Balls
-P6 10 1 1 3
-P7* 1 0 0 1
-P8 0 0 0 1
-P9* 1 0 0 1
-P10 0 0 0 0
-Total: 12/1
-Overs: 1
-Over 2:
-6
-1
-W
-W
-Scorecard for Team 2:
-Player Name Score 4s 6s Balls
-P6 10 1 1 2
-P7* 8 0 1 3
-P8 0 0 0 1
-P9 1 0 0 2
-P10 0 0 0 1
-Total: 19/4
-Overs: 1.4
-Result: Team 1 won the match by 4 runs
+**Sample input and output**:<br>
+No. of players for each team: 5<br>
+No. of overs: 2<br
+Batting Order for team 1:P1 P2 P3 P4 P5<br>
+Over 1:1 1 1 1 1 2<br>
+Scorecard for Team 1:<br>
+Player Name Score 4s 6s Balls<br>
+P1* 3 0 0 3<br>
+P2* 4 0 0 3<br>
+P3 0 0 0 0<br>
+P4 0 0 0 0<br>
+P5 0 0 0 0<br>
+Total: 7/0<br>
+Overs: 1<br>
+
+Over 2:W 4 4 Wd W 1 6<br>
+Scorecard for Team 1:<br>
+Player Name Score 4s 6s Balls<br>
+P1 3 0 0 4<br>
+P2* 10 0 1 4<br>
+P3 8 2 0 3<br>
+P4* 1 0 0 1<br>
+P5 0 0 0 0<br>
+Total: 23/2<br>
+Overs: 2<br>
+
+Batting Order for team 2:P6 P7 P8 P9 P10<br>
+Over 1:4 6 W W 1 1<br>
+Scorecard for Team 2:<br>
+Player Name Score 4s 6s Balls<br>
+P6 10 1 1 3<br>
+P7* 1 0 0 1<br>
+P8 0 0 0 1<br>
+P9* 1 0 0 1<br>
+P10 0 0 0 0<br>
+Total: 12/1<br>
+Overs: 1<br>
+
+Over 2:6 1 W W<br>
+Scorecard for Team 2:<br>
+Player Name Score 4s 6s Balls<br>
+P6 10 1 1 2<br>
+P7* 8 0 1 3<br>
+P8 0 0 0 1<br>
+P9 1 0 0 2<br>
+P10 0 0 0 1<br>
+Total: 19/4<br>
+Overs: 1.4<br>
+Result: Team 1 won the match by 4 runs<br>

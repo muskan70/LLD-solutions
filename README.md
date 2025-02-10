@@ -18,6 +18,7 @@
 17. Stack Overflow
 18. Logging System
 19. Chat Server App
+20. Cricket Scoreboard
 
 > Notes:
 > - create go.mod file : go mod init {project-name}

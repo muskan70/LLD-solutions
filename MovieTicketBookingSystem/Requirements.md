@@ -20,12 +20,16 @@
 4. Cinema Admin
 5. System 
 
+![Class Diagram](./ClassDiagram.png)
+
 # Microservices :
 1. User 
 2. Cinema Catalog
 3. Booking System
 4. Payment System
 5. Notification System
+
+![Usecase Diagram](./usecaseDiagram.png)
 
 
 

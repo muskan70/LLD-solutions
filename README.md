@@ -19,6 +19,7 @@
 18. Logging System
 19. Chat Server App
 20. Cricket Scoreboard
+21. Cron Parser
 
 > Notes:
 > - create go.mod file : go mod init {project-name}

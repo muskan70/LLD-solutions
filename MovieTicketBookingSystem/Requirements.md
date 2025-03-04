@@ -15,34 +15,84 @@
 12. System should be scalable to handle a large no.of concureent users and bookings.
 13. User should be able to cancel the bookings.
 
-### Actors : 
-1. User -> Just searching/ Checking movies
-2. Customer -> booked a movie (need authentication)
-3. Frontend Officer
-4. theatre Admin
-5. System 
+### Core Components: 
+1. User : Represents people using the system
+2. Theatre
+3. Movie
+4. Show
+4. Booking
+5. Payment
+6. Notification
 
-### Microservices :
-1. User 
-2. Movie Catalog
-3. Booking System
-4. Payment System
-5. Notification System
+### Class Definations:
+1. User:
+- userId
+- name
+- email
+- phone 
+
+2. Theatre: 
+- theatreId
+- Address
+- theatre Name
+- total halls
+
+3. Theatre Hall
+- hall Id
+- hall Name
+- total seats
+
+4. Seat
+- Row No
+- Column No
+- SeatType {Regular, Premium}
+
+5. Movie
+- Id 
+- Name
+- description
+- duration
+- Language
+- Genre
+- release date
+- List<Actors>
+- List<Reviews>
+
+6. Show
+- ShowId
+- MovieId
+- theatreId
+- hall Id
+- startTime
+- endTime
+- date
+- list<show seat>
+
+7. Show Seat
+- showId
+- seatId
+- status { booked, vacant, blocked}
+
+8. Booking
+- TicketId
+- List<seats>
+- Booking Status
+- userId
+- showId
+
+9. Payment
+- TransactionId
+- Payment Status
+- Amount
+- Payment Mode
+- payment Date
+
+10. Notification
+- message
+- status
+- Notification Type
 
 ![Class Diagram](./ClassDiagram.png)
-
-### Entities
-1. User 
-2. Movie
-3. theatre
-4. theatre Hall
-5. Seat
-6. Show
-7. Show Seat -> handle concurrency here
-8. Address
-9. Booking
-10. Payment
-11. Notification
 
 ### Entity Relationship:
 1. theatre to theatre Hall => 1:n 
@@ -51,8 +101,12 @@
 4. show to show seat => 1:n
 5. user to booking => 1:n
 6. Booking to payment => 1:1
+7. movie to show => 1:n
 
 ![Usecase Diagram](./usecaseDiagram.png)
+
+### Design Patterns
+1. 
 
 
 

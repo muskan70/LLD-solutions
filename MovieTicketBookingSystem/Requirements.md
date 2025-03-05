@@ -26,71 +26,34 @@
 
 ### Class Definations:
 1. User:
-- userId
-- name
-- email
-- phone 
+- Attributes => userId, name, email, phone 
 
 2. Theatre: 
-- theatreId
-- Address
-- theatre Name
-- total halls
+- Attributes => theatreId, Address, theatre Name, total halls
 
 3. Theatre Hall
-- hall Id
-- hall Name
-- total seats
+- Attributes => hall Id, hall Name, total seats
 
 4. Seat
-- Row No
-- Column No
-- SeatType {Regular, Premium}
+- Attributes => Row No, Column No, SeatType {Regular, Premium}
 
 5. Movie
-- Id 
-- Name
-- description
-- duration
-- Language
-- Genre
-- release date
-- List<Actors>
-- List<Reviews>
+- Attributes => Id, Name, description, duration, Language, Genre, release date, List<Actors>, List<Reviews>
 
 6. Show
-- ShowId
-- MovieId
-- theatreId
-- hall Id
-- startTime
-- endTime
-- date
-- list<show seat>
+- Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, list<showSeat>
 
 7. Show Seat
-- showId
-- seatId
-- status { booked, vacant, blocked}
+- Attributes => showId, seatId, status { booked, vacant, blocked}
 
 8. Booking
-- TicketId
-- List<seats>
-- Booking Status
-- userId
-- showId
+- Attributes => TicketId, List<seats>, Booking Status, userId, showId
 
 9. Payment
-- TransactionId
-- Payment Status
-- Amount
-- Payment Mode
-- payment Date
+- Attributes => TransactionId, Payment Status, Amount, Payment Mode, payment Date
 
 10. Notification
-- message
-- status
-- Notification Type
+- Attributes => message, status, Notification Type
 
 ![Class Diagram](./ClassDiagram.png)
 
@@ -106,7 +69,7 @@
 ![Usecase Diagram](./usecaseDiagram.png)
 
 ### Design Patterns
-1. 
+1. Builder Pattern for movie Class 
 
 
 

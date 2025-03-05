@@ -20,6 +20,7 @@
 19. [Chat Server App](./ChatServerApp)
 20. [Cricket Scoreboard](./CricketScoreboard)
 21. [Cron Parser](./CronParser)
+22. [Meeting Scheduler](./MeetingScheduler)
 
 ### Steps to run above LLD solutions:
 > 1. **create go.mod file** : go mod init {project-name}

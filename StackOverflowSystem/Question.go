@@ -37,8 +37,16 @@ func NewQuestion(title, content string, authorId int) *Question {
 func SearchQuestions(query string) []Question {
 	var questions []Question
 	for _, ques := range Questions {
-		if strings.Contains(ques.Title, query) || strings.Contains(ques.Content, query) || strings.Contains(strings.Join(ques.GetTags(), " "), query) {
+		if strings.Contains(ques.Title, query) || strings.Contains(ques.Content, query) {
 			questions = append(questions, *ques)
+			continue
+		}
+		tags := ques.GetTags()
+		for i := range tags {
+			if tags[i] == query {
+				questions = append(questions, *ques)
+				continue
+			}
 		}
 	}
 	return questions

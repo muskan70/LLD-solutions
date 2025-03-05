@@ -21,6 +21,7 @@
 20. [Cricket Scoreboard](./CricketScoreboard)
 21. [Cron Parser](./CronParser)
 22. [Meeting Scheduler](./MeetingScheduler)
+23. [Chess Game](./ChessGame)
 
 ### Steps to run above LLD solutions:
 > 1. **create go.mod file** : go mod init {project-name}
@@ -53,4 +54,4 @@
 - Pseudocode : Write pseudocode for critical parts of the system to demonstrate logic.
 - Time Management: Allocate specific time slots for different sections (e.g., 15 mins for class design, 10 mins for patterns, 10 mins for pseudocode).
 
-7. [Example](./ChessGame/Readme.md)
+7. [Example](./ChessGame/Requirements.md)

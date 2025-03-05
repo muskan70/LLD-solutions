@@ -16,12 +16,26 @@
 - Game: Manages the overall game logic.
 
 ### Define Class Diagrams (15 minutes)
-- Player: Attributes: name, color, Methods: makeMove()
-- ChessBoard: Attributes: board[8][8], Methods: setupBoard(), movePiece(), isCheck(), isCheckmate()
-- Piece: Attributes: position, color, Methods: validMoves()
-- Subclasses: King, Queen, Rook, Bishop, Knight, Pawn
-- Move: Attributes: startPosition, endPosition, piece, Methods: execute()
-- Game: Attributes: players, currentTurn, chessBoard, Methods: startGame(), endGame(), switchTurn()
+1. Player:
+- Attributes => name, color
+- Methods    => makeMove()
+
+2. ChessBoard:
+- Attributes => board[8][8], Piece: King(2), Queen(2), Rook(2), Bishop(2), Knight(2), Pawn(16) -> half-half for each player
+- Methods    => setupBoard(), movePiece(), isCheck(), isCheckmate()
+
+3. Piece:
+- Attributes => position, color
+- Methods    => validMoves()
+- Subclasses => King, Queen, Rook, Bishop, Knight, Pawn
+
+4. Move:
+- Attributes => startPosition, endPosition, piece
+- Methods    => execute()
+
+5. Game:
+- Attributes => players, currentTurn, chessBoard
+- Methods    => startGame(), endGame(), switchTurn()
 
 ### Design Patterns (10 minutes)
 - Singleton: Ensure only one instance of the Game.

@@ -30,30 +30,42 @@
 
 2. Theatre: 
 - Attributes => theatreId, Address, theatre Name, total halls
+- Methods    => CRUD of Theatre
 
 3. Theatre Hall
 - Attributes => hall Id, hall Name, total seats
+- Methods    => CRUD of Theatre Hall
 
 4. Seat
 - Attributes => Row No, Column No, SeatType {Regular, Premium}
+- Methods    => CRUD of Seat
 
 5. Movie
 - Attributes => Id, Name, description, duration, Language, Genre, release date, List<Actors>, List<Reviews>
+- Methods    => CRUD of Movie
 
 6. Show
 - Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, list<showSeat>
+- Methods    => AddShow(), GetSeatsStatus()
 
 7. Show Seat
 - Attributes => showId, seatId, status { booked, vacant, blocked}
+- Methods    => GetStatus(), SetStatus()
 
 8. Booking
 - Attributes => TicketId, List<seats>, Booking Status, userId, showId
+- Methods    => CreateBooking(), CancelBooking(), ViewBooking()
 
 9. Payment
 - Attributes => TransactionId, Payment Status, Amount, Payment Mode, payment Date
+- Methods    => MakePayment()
 
 10. Notification
 - Attributes => message, status, Notification Type
+- Methods    => SendNotification()
+
+11. Catalog : List<Movie>
+- Methods => SearchMovieByReleaseDate(), SearchMovieByTitle(), SearchMovieByLanguage(), SearchMovieByGenre(), SearchMovieByCity()
 
 ![Class Diagram](./ClassDiagram.png)
 

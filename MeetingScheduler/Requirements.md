@@ -32,7 +32,7 @@
 - Methods    => AddUser(), NotifyUsers(), UpdateSchedule(), SetMeetingRecurrentSchedule()
 
 2. Calender: 
-- Attributes => map<date, List<MeetingId>>
+- Attributes => map{date, List{MeetingId}}
 - Methods    => GetMeetingsForDay(), IsAvailable(), GetAvailableSlots(), GetScheduledMeetingsForDay(), ScheduleMeeting()
 
 3. User extends Calender

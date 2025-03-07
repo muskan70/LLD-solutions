@@ -41,11 +41,11 @@
 - Methods    => CRUD of Seat
 
 5. Movie
-- Attributes => Id, Name, description, duration, Language, Genre, release date, List<Actors>, List<Reviews>
+- Attributes => Id, Name, description, duration, Language, Genre, release date, List{Actors}, List{Reviews}
 - Methods    => CRUD of Movie
 
 6. Show
-- Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, list<showSeat>
+- Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, list{ShowSeat}
 - Methods    => AddShow(), GetSeatsStatus()
 
 7. Show Seat
@@ -53,7 +53,7 @@
 - Methods    => GetStatus(), SetStatus()
 
 8. Booking
-- Attributes => TicketId, List<seats>, Booking Status, userId, showId
+- Attributes => TicketId, List{seatIds}, Booking Status, userId, showId
 - Methods    => CreateBooking(), CancelBooking(), ViewBooking()
 
 9. Payment
@@ -64,7 +64,7 @@
 - Attributes => message, status, Notification Type
 - Methods    => SendNotification()
 
-11. Catalog : List<Movie>
+11. Catalog : List{Movie}
 - Methods => SearchMovieByReleaseDate(), SearchMovieByTitle(), SearchMovieByLanguage(), SearchMovieByGenre(), SearchMovieByCity()
 
 ![Class Diagram](./ClassDiagram.png)

@@ -2,23 +2,24 @@
 
 ### Implement a persistent pub-sub queue mechanism with guaranteed delivery of every published message for all the subscribed consumers in that subscribed topic in the same order.
 
-Topic
-Topic A -> “{ a: b, c :d }”, “{ e: f, g :h }” 
-Topic B -> “{ a: b, c :d }”
+**Topic**
+- Topic A -> “{ a: b, c :d }”, “{ e: f, g :h }” 
+- Topic B -> “{ a: b, c :d }”
 
+**Subscriber**
+- Subscriber X ->(subscribed to) Topic A
+- Subscriber Y ->(subscribed to) Topic B
+- Subscriber Z ->(subscribed to) Topic A, Topic B
 
-Subscriber A ->(subscribed to) Topic A
-Subscriber B ->(subscribed to) Topic B
-Subscriber C ->(subscribed to) Topic A, Topic B
+**Reading from Topic**
+- Subscriber X -> 
+> Reading from topic A -> “{ a: b, c :d }”<br>
+> Reading from topic B ->  
 
-Subscriber A -> 
-Reading from topic A -> “{ a: b, c :d }”
-Reading from topic B ->  
-
-Subscriber C -> 
-Reading from topic A -> “{ a: b, c :d }”
-Reading from topic B -> “{ a: b, c :d }” 
-Reading from topic A -> “{ e: f, g :h }”
+- Subscriber Z -> 
+> Reading from topic A -> “{ a: b, c :d }”<br>
+> Reading from topic B -> “{ a: b, c :d }”<br> 
+> Reading from topic A -> “{ e: f, g :h }”
 
 
 

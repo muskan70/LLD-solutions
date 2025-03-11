@@ -22,6 +22,7 @@
 21. [Cron Parser](./CronParser)
 22. [Meeting Scheduler](./MeetingScheduler)
 23. [Chess Game](./ChessGame)
+24. [Amazon Locker System](./AmazaonLockerSystem)
 
 ### Steps to run above LLD solutions:
 > 1. **create go.mod file** : go mod init {project-name}

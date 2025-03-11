@@ -25,7 +25,6 @@
 2. Observer : Notification() 
 3. RoomAllocationStrategy : BookRoom()
 
-
 ### Class Definations
 1. Meeting 
 - Attributes => MeetingId, Date, day, StartTime, EndTime, RoomId, Host: User, Participants: List<User>, MeetingType: Recurrent/ OneTime

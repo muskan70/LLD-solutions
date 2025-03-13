@@ -29,7 +29,7 @@ func (g *Group) RemoveParticipant(userId int) {
 
 func (g *Group) GetChatId(userId int) (int, error) {
 	if _, ok := g.Participants[userId]; !ok {
-		return nil, errors.New("this user is not a member of group")
+		return -1, errors.New("this user is not a member of group")
 	}
 	return g.ChatId, nil
 }

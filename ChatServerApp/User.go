@@ -8,6 +8,7 @@ type User struct {
 	Email       string
 	Phone       int
 	DirectChats map[int]int
+	GroupChats  map[int]int
 }
 
 func NewUser(name, email string, phone int) *User {
@@ -30,4 +31,12 @@ func (u *User) GetChatId(userId int) int {
 
 func (u *User) AddChatId(userId int, chatId int) {
 	u.DirectChats[userId] = chatId
+}
+
+func (u *User) AddGroupChatId(grpId int, chatId int) {
+	u.GroupChats[grpId] = chatId
+}
+
+func (u *User) RemoveGroupChatId(grpId int) {
+	delete(u.GroupChats, grpId)
 }

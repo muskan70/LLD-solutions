@@ -16,7 +16,7 @@ func NewChatSystem() *ChatSystem {
 	}
 }
 
-func (c *ChatSystem) HandleDirectMessage(req sendRequest) error {
+func (c *ChatSystem) HandleDirectMessage(req sendDirectMessageRequest) error {
 	sender, ok1 := c.Users[req.SenderId]
 	receiver, ok2 := c.Users[req.ReceiverId]
 	if !ok1 || !ok2 {
@@ -25,7 +25,7 @@ func (c *ChatSystem) HandleDirectMessage(req sendRequest) error {
 	chatId := sender.GetChatId(req.ReceiverId)
 	var chat *Chat
 	if chatId == -1 {
-		chat = NewChat()
+		chat = NewDirectChat(req.SenderId, req.ReceiverId)
 		c.Chats[chat.ChatId] = chat
 		sender.AddChatId(req.ReceiverId, chat.ChatId)
 		receiver.AddChatId(req.SenderId, chat.ChatId)
@@ -36,9 +36,49 @@ func (c *ChatSystem) HandleDirectMessage(req sendRequest) error {
 	return nil
 }
 
+func (c *ChatSystem) ReceiveMessages(userId int) (map[int][]Message, map[int][]Message, error) {
+	usr, ok := c.Users[userId]
+	if !ok {
+		return nil, nil, errors.New("this userId doesn't exist")
+	}
+	directMsgs := make(map[int][]Message)
+	for usr, chatId := range usr.DirectChats {
+		if msgs := c.Chats[chatId].ReceiveMessage(userId); len(msgs) > 0 {
+			directMsgs[usr] = msgs
+		}
+	}
+	grpMsgs := make(map[int][]Message)
+	for grp, chatId := range usr.GroupChats {
+		if msgs := c.Chats[chatId].ReceiveMessage(userId); len(msgs) > 0 {
+			grpMsgs[grp] = msgs
+		}
+	}
+	return directMsgs, grpMsgs, nil
+}
+
+func (c *ChatSystem) ChatHistoryOfUser(userId int) (map[int][]Message, map[int][]Message, error) {
+	usr, ok := c.Users[userId]
+	if !ok {
+		return nil, nil, errors.New("this userId doesn't exist")
+	}
+	directMsgs := make(map[int][]Message)
+	for usr, chatId := range usr.DirectChats {
+		if msgs := c.Chats[chatId].GetAllMessages(); len(msgs) > 0 {
+			directMsgs[usr] = msgs
+		}
+	}
+	grpMsgs := make(map[int][]Message)
+	for grp, chatId := range usr.GroupChats {
+		if msgs := c.Chats[chatId].GetAllMessages(); len(msgs) > 0 {
+			grpMsgs[grp] = msgs
+		}
+	}
+	return directMsgs, grpMsgs, nil
+}
+
 func (c *ChatSystem) CreateGroup(req CreateGroupReq) int {
 	g := NewGroup(req.GroupName, req.AdminId)
-	chat := NewChat()
+	chat := NewGroupChat(req.AdminId)
 	g.ChatId = chat.ChatId
 	c.Chats[g.ChatId] = chat
 	c.Groups[g.GroupId] = g
@@ -46,24 +86,31 @@ func (c *ChatSystem) CreateGroup(req CreateGroupReq) int {
 }
 
 func (c *ChatSystem) AddUserToGroup(req AddUserToGroupReq) error {
-	if _, ok := c.Groups[req.GroupId]; !ok {
+	grp, ok := c.Groups[req.GroupId]
+	if !ok {
 		return errors.New("this groupId doesn't exist")
 	}
-	if _, ok := c.Users[req.UserId]; !ok {
+	usr, ok := c.Users[req.UserId]
+	if !ok {
 		return errors.New("this userId doesn't exist")
 	}
-	c.Groups[req.GroupId].AddParticipant(req.UserId)
+	grp.AddParticipant(req.UserId)
+	c.Chats[grp.ChatId].AddUserToGroupChat(req.UserId)
+	usr.AddGroupChatId(req.GroupId, grp.ChatId)
 	return nil
 }
 
 func (c *ChatSystem) RemoveUserFromGroup(req RemoveUserFromGroupReq) error {
-	if _, ok := c.Groups[req.GroupId]; !ok {
+	grp, ok := c.Groups[req.GroupId]
+	if !ok {
 		return errors.New("this groupId doesn't exist")
 	}
-	if _, ok := c.Users[req.UserId]; !ok {
+	usr, ok := c.Users[req.UserId]
+	if !ok {
 		return errors.New("this userId doesn't exist")
 	}
-	c.Groups[req.GroupId].RemoveParticipant(req.UserId)
+	grp.RemoveParticipant(req.UserId)
+	usr.RemoveGroupChatId(req.GroupId)
 	return nil
 }
 

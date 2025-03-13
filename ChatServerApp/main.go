@@ -13,26 +13,27 @@ func main() {
 	chatSystem = NewChatSystem()
 
 	router := gin.Default()
-	//router.GET("/receiveMessage", receiveMessage)
-	router.POST("/sendMessage", sendMessage)
-	router.POST("/createGroup", createGroup)
-	router.POST("/addUserToGroup", addUserToGroup)
-	router.POST("/removeUserfromGroup", removeUserFromGroup)
-	router.POST("/sendMessageToGroup", sendMessageToGroup)
-	router.GET("/getMessagesFromGroup", getMessagesFromGroup)
+	router.GET("/receiveMessage", receiveMessage)
+	router.POST("/sendMessage", sendDirectMessage)
+	router.GET("/chatHistory", getChatHistory)
+	router.POST("/group/create", createGroup)
+	router.POST("/group/addUser", addUserToGroup)
+	router.POST("/group/removeUser", removeUserFromGroup)
+	router.POST("/group/sendMessage", sendMessageToGroup)
+	router.GET("/group/getAllMessages", getMessagesFromGroup)
 
 	router.Run("localhost:8080")
 
 }
 
-type sendRequest struct {
+type sendDirectMessageRequest struct {
 	Content    string `json:"message"`
 	SenderId   int    `json:"senderId"`
 	ReceiverId int    `json:"receiverId"`
 }
 
-func sendMessage(c *gin.Context) {
-	var req sendRequest
+func sendDirectMessage(c *gin.Context) {
+	var req sendDirectMessageRequest
 	if err := c.BindJSON(&req); err != nil {
 		log.Println(err)
 		c.IndentedJSON(http.StatusBadRequest, err)
@@ -42,21 +43,48 @@ func sendMessage(c *gin.Context) {
 	c.IndentedJSON(http.StatusAccepted, "message received successfully")
 }
 
-// type receiveRequest struct {
-// 	username string `form:"username"`
-// }
+type receiveRequest struct {
+	userId int `form:"userId"`
+}
 
-// func receiveMessage(c *gin.Context) {
-// 	var req receiveRequest
-// 	if err := c.BindQuery(&req); err != nil {
-// 		log.Println(err)
-// 		c.IndentedJSON(http.StatusBadRequest, err)
-// 		return
-// 	}
-// 	msgs := messages.GetAllMessages()
-// 	c.IndentedJSON(http.StatusAccepted, msgs)
+func receiveMessage(c *gin.Context) {
+	var req receiveRequest
+	if err := c.BindQuery(&req); err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+	directMsgs, grpMsgs, err := chatSystem.ReceiveMessages(req.userId)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+	c.IndentedJSON(http.StatusAccepted, gin.H{
+		"direct Messages": directMsgs,
+		"group Messages":  grpMsgs,
+	})
+}
 
-// }
+func getChatHistory(c *gin.Context) {
+	var req receiveRequest
+	if err := c.BindQuery(&req); err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+	directMsgs, grpMsgs, err := chatSystem.ChatHistoryOfUser(req.userId)
+	if err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+	c.IndentedJSON(http.StatusAccepted, gin.H{
+		"direct Messages": directMsgs,
+		"group Messages":  grpMsgs,
+	})
+
+}
 
 type CreateGroupReq struct {
 	GroupName string `json:"groupName"`

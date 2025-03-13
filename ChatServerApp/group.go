@@ -2,36 +2,42 @@ package main
 
 import "errors"
 
-type message struct {
-	Msg  string `json:"message"`
-	User string `json:"userName"`
-}
+var groupId = 0
 
 type Group struct {
-	GroupName string
-	messages  []message
-	Users     map[string]bool
+	GroupId      int
+	ChatId       int
+	GroupName    string
+	ProfileURL   string
+	Participants map[int]bool
+	AdminId      int
 }
 
-func NewGroup(gpName string) *Group {
-	return &Group{GroupName: gpName, messages: []message{}, Users: make(map[string]bool)}
+func NewGroup(gpName string, adminId int) *Group {
+	users := make(map[int]bool)
+	users[adminId] = true
+	return &Group{GroupName: gpName, ChatHistory: NewChat(), Participants: users, AdminId: adminId}
 }
 
-func (g *Group) AddUser(u string) {
-	g.Users[u] = true
+func (g *Group) AddParticipant(userId int) {
+	g.Participants[u] = true
 }
 
-func (g *Group) AddMessage(usr string, msg string) error {
-	if _, ok := g.Users[usr]; !ok {
+func (g *Group) RemoveParticipant(userId int) {
+	delete(g.Participants, u)
+}
+
+func (g *Group) AddMessage(userId int, content string) error {
+	if _, ok := g.Participants[userId]; !ok {
 		return errors.New("this user is not a member of group")
 	}
-	g.messages = append(g.messages, message{Msg: msg, User: usr})
+	chats[g.ChatId].AddMessage(NewMessage(userId, g.ChatId, content))
 	return nil
 }
 
-func (g *Group) GetAllMessages(u string) ([]message, error) {
-	if _, ok := g.Users[u]; !ok {
+func (g *Group) GetChatHistory(userId Int) ([]Message, error) {
+	if _, ok := g.Participants[userId]; !ok {
 		return nil, errors.New("this user is not a member of group")
 	}
-	return g.messages, nil
+	return chats[g.ChatId].GetAllMessages(), nil
 }

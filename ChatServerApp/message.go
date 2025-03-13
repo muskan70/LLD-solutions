@@ -1,24 +1,28 @@
 package main
 
-import "log"
+import (
+	"time"
+)
 
-type MessageList struct {
-	msg []string
+var messageId = 0
+
+type Message struct {
+	MessageID   int
+	UserId      int    `json:"userId"`
+	ChatId      int    `json:"chatId"`
+	Content     string `json:"message"`
+	SentAt      time.Time
+	DeliveredAt map[int]time.Time
+	SeenAt      map[int]time.Time
 }
 
-func NewMessageList() MessageList {
-	return MessageList{msg: []string{}}
-}
-
-func (m *MessageList) AddMessage(curMsg string) {
-	m.msg = append(m.msg, curMsg)
-	log.Println(m.msg)
-}
-
-func (m *MessageList) GetAllMessages() string {
-	msgs := ""
-	for i := range m.msg {
-		msgs = msgs + m.msg[i] + "\n"
+func NewMessage(userId, chatId int, content string) Message {
+	messageId++
+	return Message{
+		MessageID: messageId,
+		UserId:    userId,
+		ChatId:    chatId,
+		Content:   content,
+		SentAt:    time.Now(),
 	}
-	return msgs
 }

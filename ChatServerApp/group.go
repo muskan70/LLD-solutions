@@ -16,28 +16,20 @@ type Group struct {
 func NewGroup(gpName string, adminId int) *Group {
 	users := make(map[int]bool)
 	users[adminId] = true
-	return &Group{GroupName: gpName, ChatHistory: NewChat(), Participants: users, AdminId: adminId}
+	return &Group{GroupName: gpName, Participants: users, AdminId: adminId}
 }
 
 func (g *Group) AddParticipant(userId int) {
-	g.Participants[u] = true
+	g.Participants[userId] = true
 }
 
 func (g *Group) RemoveParticipant(userId int) {
-	delete(g.Participants, u)
+	delete(g.Participants, userId)
 }
 
-func (g *Group) AddMessage(userId int, content string) error {
-	if _, ok := g.Participants[userId]; !ok {
-		return errors.New("this user is not a member of group")
-	}
-	chats[g.ChatId].AddMessage(NewMessage(userId, g.ChatId, content))
-	return nil
-}
-
-func (g *Group) GetChatHistory(userId Int) ([]Message, error) {
+func (g *Group) GetChatId(userId int) (int, error) {
 	if _, ok := g.Participants[userId]; !ok {
 		return nil, errors.New("this user is not a member of group")
 	}
-	return chats[g.ChatId].GetAllMessages(), nil
+	return g.ChatId, nil
 }

@@ -7,16 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var chats map[int]*Chat
-var groups map[int]*Group
+var chatSystem *ChatSystem
 
 func main() {
-	chats = make(map[int]*Chat)
-	groups = make(map[int]*Group)
+	chatSystem = NewChatSystem()
 
 	router := gin.Default()
 	//router.GET("/receiveMessage", receiveMessage)
-	//router.POST("/sendMessage", sendMessage)
+	router.POST("/sendMessage", sendMessage)
 	router.POST("/createGroup", createGroup)
 	router.POST("/addUserToGroup", addUserToGroup)
 	router.POST("/removeUserfromGroup", removeUserFromGroup)
@@ -27,22 +25,22 @@ func main() {
 
 }
 
-// type sendRequest struct {
-// 	Msg      string `json:'message'`
-// 	Username string
-// }
+type sendRequest struct {
+	Content    string `json:"message"`
+	SenderId   int    `json:"senderId"`
+	ReceiverId int    `json:"receiverId"`
+}
 
-// func sendMessage(c *gin.Context) {
-// 	var req sendRequest
-// 	if err := c.BindJSON(&req); err != nil {
-// 		log.Println(err)
-// 		c.IndentedJSON(http.StatusBadRequest, err)
-// 		return
-// 	}
-// 	log.Println(req)
-// 	messages.AddMessage(req.Message)
-// 	c.IndentedJSON(http.StatusAccepted, "message received successfully")
-// }
+func sendMessage(c *gin.Context) {
+	var req sendRequest
+	if err := c.BindJSON(&req); err != nil {
+		log.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, err)
+		return
+	}
+	chatSystem.HandleDirectMessage(req)
+	c.IndentedJSON(http.StatusAccepted, "message received successfully")
+}
 
 // type receiveRequest struct {
 // 	username string `form:"username"`
@@ -72,11 +70,9 @@ func createGroup(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
-	g := NewGroup(req.GroupName, req.AdminId)
-	groups[g.GroupId] = g
-	log.Println(groups)
+	groupId := chatSystem.CreateGroup(req)
 	c.IndentedJSON(http.StatusAccepted, gin.H{
-		"GroupId": g.GroupId,
+		"GroupId": groupId,
 		"message": "group created successfully",
 	})
 }
@@ -93,11 +89,10 @@ func addUserToGroup(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
-	if _, ok := groups[req.GroupId]; !ok {
-		c.IndentedJSON(http.StatusBadRequest, "this group doesn't exist")
+	if err := chatSystem.AddUserToGroup(req); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
-	groups[req.GroupId].AddParticipant(req.UserId)
 	c.IndentedJSON(http.StatusAccepted, "user added to group successfully")
 }
 
@@ -113,11 +108,10 @@ func removeUserFromGroup(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
-	if _, ok := groups[req.GroupId]; !ok {
-		c.IndentedJSON(http.StatusBadRequest, "this group doesn't exist")
+	if err := chatSystem.RemoveUserFromGroup(req); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
-	groups[req.GroupId].RemoveParticipant(req.UserId)
 	c.IndentedJSON(http.StatusAccepted, "user removed from group successfully")
 }
 
@@ -134,12 +128,7 @@ func sendMessageToGroup(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
-	if _, ok := groups[req.GroupId]; !ok {
-		c.IndentedJSON(http.StatusBadRequest, "this group doesn't exist")
-		return
-	}
-	if err := groups[req.GroupId].AddMessage(req.UserId, req.Content); err != nil {
-		log.Println(err)
+	if err := chatSystem.HandleGroupMessage(req); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	}
@@ -159,12 +148,7 @@ func getMessagesFromGroup(c *gin.Context) {
 		return
 	}
 
-	if _, ok := groups[req.GroupId]; !ok {
-		c.IndentedJSON(http.StatusBadRequest, "this group doesn't exist")
-		return
-	}
-	if msgs, err := groups[req.GroupId].GetChatHistory(req.UserId); err != nil {
-		log.Println(err)
+	if msgs, err := chatSystem.GetGroupChatHistory(req); err != nil {
 		c.IndentedJSON(http.StatusBadRequest, err)
 		return
 	} else {

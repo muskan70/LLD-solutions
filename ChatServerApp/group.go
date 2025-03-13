@@ -14,9 +14,10 @@ type Group struct {
 }
 
 func NewGroup(gpName string, adminId int) *Group {
+	groupId++
 	users := make(map[int]bool)
 	users[adminId] = true
-	return &Group{GroupName: gpName, Participants: users, AdminId: adminId}
+	return &Group{GroupId: groupId, GroupName: gpName, Participants: users, AdminId: adminId}
 }
 
 func (g *Group) AddParticipant(userId int) {

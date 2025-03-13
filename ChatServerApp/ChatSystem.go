@@ -76,13 +76,24 @@ func (c *ChatSystem) ChatHistoryOfUser(userId int) (map[int][]Message, map[int][
 	return directMsgs, grpMsgs, nil
 }
 
-func (c *ChatSystem) CreateGroup(req CreateGroupReq) int {
+func (c *ChatSystem) CreateGroup(req CreateGroupReq) (int, error) {
+	usr, ok := c.Users[req.AdminId]
+	if !ok {
+		return -1, errors.New("this userId doesn't exist")
+	}
 	g := NewGroup(req.GroupName, req.AdminId)
 	chat := NewGroupChat(req.AdminId)
 	g.ChatId = chat.ChatId
 	c.Chats[g.ChatId] = chat
+	usr.AddGroupChatId(g.GroupId, chat.ChatId)
 	c.Groups[g.GroupId] = g
-	return g.GroupId
+	return g.GroupId, nil
+}
+
+func (c *ChatSystem) AddNewUser(req loginUserRequest) int {
+	usr := NewUser(req.Name, req.Email, req.Phone)
+	c.Users[usr.UserId] = usr
+	return usr.UserId
 }
 
 func (c *ChatSystem) AddUserToGroup(req AddUserToGroupReq) error {

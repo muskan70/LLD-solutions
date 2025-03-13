@@ -14,10 +14,12 @@ type User struct {
 func NewUser(name, email string, phone int) *User {
 	userId++
 	return &User{
-		UserId: userId,
-		Name:   name,
-		Email:  email,
-		Phone:  phone,
+		UserId:      userId,
+		Name:        name,
+		Email:       email,
+		Phone:       phone,
+		DirectChats: make(map[int]int),
+		GroupChats:  make(map[int]int),
 	}
 }
 

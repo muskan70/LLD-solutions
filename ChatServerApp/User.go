@@ -1,14 +1,23 @@
 package main
 
+import "time"
+
 var userId = 0
 
+const (
+	UserOnline  = true
+	UserOffline = false
+)
+
 type User struct {
-	UserId      int
-	Name        string
-	Email       string
-	Phone       int
-	DirectChats map[int]int
-	GroupChats  map[int]int
+	UserId         int
+	Name           string
+	Email          string
+	Phone          int
+	DirectChats    map[int]int
+	GroupChats     map[int]int
+	PresenceStatus bool
+	LastSeen       time.Time
 }
 
 func NewUser(name, email string, phone int) *User {
@@ -41,4 +50,14 @@ func (u *User) AddGroupChatId(grpId int, chatId int) {
 
 func (u *User) RemoveGroupChatId(grpId int) {
 	delete(u.GroupChats, grpId)
+}
+
+func (u *User) UpdatePresence(status bool) {
+	u.PresenceStatus = status
+	if !status {
+		u.LastSeen = time.Now()
+	} else {
+		u.LastSeen = time.Time{}
+	}
+	// TODO: notify observers
 }

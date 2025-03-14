@@ -39,7 +39,6 @@ func (c *Chat) AddUserToGroupChat(userId int) {
 
 func (c *Chat) AddMessage(msg Message) {
 	c.Messages = append(c.Messages, msg)
-	c.UsersOffset[msg.UserId] = len(c.Messages)
 }
 
 func (c *Chat) GetAllMessages() []Message {
@@ -51,6 +50,9 @@ func (c *Chat) ReceiveMessage(userId int) []Message {
 		return []Message{}
 	}
 	msgs := c.Messages[c.UsersOffset[userId]:]
+	for i := range msgs {
+		msgs[i].AddStatus(MessageStatusDelivered)
+	}
 	c.UsersOffset[userId] = len(c.Messages)
 	return msgs
 }

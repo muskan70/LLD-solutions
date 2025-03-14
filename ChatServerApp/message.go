@@ -6,14 +6,18 @@ import (
 
 var messageId = 0
 
+const (
+	MessageStatusSent = iota + 1
+	MessageStatusDelivered
+	MessageStatusSeen
+)
+
 type Message struct {
-	MessageID   int
-	UserId      int    `json:"userId"`
-	ChatId      int    `json:"chatId"`
-	Content     string `json:"message"`
-	SentAt      time.Time
-	DeliveredAt map[int]time.Time
-	SeenAt      map[int]time.Time
+	MessageID int
+	UserId    int    `json:"userId"`
+	ChatId    int    `json:"chatId"`
+	Content   string `json:"message"`
+	StatusMap map[int]time.Time
 }
 
 func NewMessage(userId, chatId int, content string) Message {
@@ -23,6 +27,11 @@ func NewMessage(userId, chatId int, content string) Message {
 		UserId:    userId,
 		ChatId:    chatId,
 		Content:   content,
-		SentAt:    time.Now(),
-	}
+		StatusMap: map[int]time.Time{
+			MessageStatusSent: time.Now(),
+		}}
+}
+
+func (m *Message) AddStatus(status int) {
+	m.StatusMap[status] = time.Now()
 }

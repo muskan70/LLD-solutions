@@ -26,11 +26,12 @@
 
 4. Match
 - Attributes => TeamA, TeamB, Innings[2], TossStatus, TossAction, Winner
-- Attributes => PlayMatch()
+- Methods => PlayMatch()
 
 5. Scorecard
 - Attributes => Runs, BallsPlayed, Sixes, Fours
 
 6. Over
 - Attributes => []Balls
+- Methods => UpdateInningScore()
 

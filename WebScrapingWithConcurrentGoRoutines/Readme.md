@@ -1,6 +1,6 @@
 # Concurrenty in Golang
 #### write a golang program which download the content of urls and identify the occurance of keyword in url content
-Example -> url : www.makemytrip.com , keyword -> makemytrip
+- Example -> url : www.makemytrip.com , keyword -> makemytrip
 
 1. launch goroutines in controlled manner
 2. Use channels and waitGroup for showcasing usecase

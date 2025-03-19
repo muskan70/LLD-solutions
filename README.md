@@ -16,6 +16,7 @@
 + [N-elevator System](./NElevatorSystem)
 + [Parking Lot](./ParkingLot)
 + [Publisher Subscriber System](./PublisherSubcriberSystem) : Pull Based Architecture, Observer Design Pattern
++ [Rate Limiter](./RateLimiter)
 + [Snakes and Ladders Game](./SnakesNLaddersGame) : Factory Design Pattern
 + [Splitwise](./SplitwiseSystem)
 + [Stack Overflow](./StackOverflowSystem)

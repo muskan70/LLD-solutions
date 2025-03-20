@@ -2,9 +2,16 @@ package main
 
 import algo "rateLimiter/RateLimitingAlgo"
 
-type RequestStore struct {
-	RateLimiter algo.IRateLimiter
-	UserId      int
+type RequestStore map[int]map[int]algo.IRateLimiter
+
+var store RequestStore
+
+func NewStore() {
+	store = make(RequestStore)
 }
 
-type RequestStoreService map[int]RequestStore
+func AddNewRequestStore(apiId, userId int) {
+	config := GetThrottleConfig(apiId)
+	rateLimiter := algo.RateLimiterFactory(config.RateLimiterAlgo)
+	store[apiId][userId] = rateLimiter
+}

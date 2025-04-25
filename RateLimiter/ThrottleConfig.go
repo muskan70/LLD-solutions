@@ -4,6 +4,7 @@ type ThrottleConfig struct {
 	RateLimiterAlgo     int
 	NoofRequestsAllowed int
 	WindowInSeconds     int
+	MaxBucketCapacity   int //optional
 }
 
 var throttleConfigMap map[int]*ThrottleConfig

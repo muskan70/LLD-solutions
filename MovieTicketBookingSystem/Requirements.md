@@ -37,7 +37,7 @@
 - Methods    => CRUD of Theatre Hall
 
 4. Seat
-- Attributes => Row No, Column No, SeatType {Regular, Premium}
+- Attributes => SeatNo, Row No, Column No, SeatType {Regular, Premium}
 - Methods    => CRUD of Seat
 
 5. Movie
@@ -45,11 +45,11 @@
 - Methods    => CRUD of Movie
 
 6. Show
-- Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, list{ShowSeat}
+- Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, map{SeatNo}SeatLock
 - Methods    => AddShow(), GetSeatsStatus()
 
-7. Show Seat
-- Attributes => showId, seatId, status { booked, vacant, blocked}
+7. Seat Lock
+- Attributes => status, lock
 - Methods    => GetStatus(), SetStatus()
 
 8. Booking
@@ -82,6 +82,8 @@
 
 ### Design Patterns
 1. Builder Pattern for movie Class 
+2. Strategy Pattern for seat locking
+3. Observer pattern for user notification
 
 
 

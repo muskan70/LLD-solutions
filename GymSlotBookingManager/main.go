@@ -1,10 +1,10 @@
 package main
 
-import "flip/usecase"
+import (
+	"flip/model"
+)
 
 func main() {
-	usecase.NewCentreUsecase()
-	usecase.NewUserUsecase()
-	usecase.NewSlotUsecase()
+	model.Init()
 	test()
 }

@@ -2,83 +2,87 @@ package usecase
 
 import (
 	"errors"
-	"flip/domain"
+	"flip/constants"
+	"flip/model"
 	"sort"
+	"time"
 )
 
-var Users map[uint64]*domain.User
-
-func NewUserUsecase() {
-	Users = make(map[uint64]*domain.User)
+type AvailableSessionsWrtUser struct {
+	Distance float64
+	CentreId uint64
+	Session  *model.WorkoutSession
 }
 
-func RegisterUser(name string, phone int, loc domain.Location, usertype int) (uint64, error) {
-	user, err := domain.NewUser(name, phone, loc, usertype)
+func CreateWorkoutSlot(centreId uint64, workoutType int, slotTime, availableSeats, slotType int, days []int, charges float64) (uint64, error) {
+	slotId, err := model.NewWorkoutSlot(centreId, workoutType, slotTime, availableSeats, slotType, days, charges)
 	if err != nil {
 		return 0, err
 	}
-	Users[user.UserId] = user
-	return user.UserId, nil
+
+	centre, _ := model.GetCentre(centreId)
+
+	if err := centre.AddWorkoutSlot(slotId); err != nil {
+		return 0, err
+	}
+	return slotId, nil
 }
 
-func GetAvailableSessions(userId uint64, workoutType int, day int) ([]*AvailableSlotsWrtUser, error) {
-	_, ok := Users[userId]
-	if !ok {
-		return nil, errors.New("user is not registered")
-	}
-	slots := ViewAvailableWorkoutSessions(workoutType, day, Users[userId])
-	sort.Slice(slots, func(i, j int) bool {
-		return slots[i].Distance < slots[j].Distance
-	})
-	return slots, nil
-}
+func GetAvailableSessions(userId uint64, workoutType int, date string) ([]*AvailableSessionsWrtUser, error) {
+	user, _ := model.GetUserById(userId)
+	var availableSessions []*AvailableSessionsWrtUser
+	slots := model.GetAvailableSessions(date, workoutType)
 
-func BookSession(userId, centreId uint64, workoutSlot *domain.WorkoutSlot, day int) error {
-	user, ok := Users[userId]
-	if !ok {
-		return errors.New("user is not registered")
-	}
-	if err := user.CheckDaySlots(day); err != nil {
-		return err
-	}
-	centre, ok := Centres[centreId]
-	if !ok {
-		return errors.New("invalid centre")
-	}
-
-	if schedule, ok := centre.WorkoutTypesDayWiseSchedule[workoutSlot.WorkoutType]; ok {
-		if slots, ok := schedule[day]; ok {
-			for _, slot := range slots {
-				if slot.SlotTime == workoutSlot.SlotTime {
-					if err := slot.BookSlot(user); err != nil {
-						return err
-					}
-					user.AddBookedSlot(workoutSlot, day)
-					return nil
-				}
-			}
+	for x := range slots {
+		slotDetails, _ := model.GetWorkSlotById(slots[x].WorkoutSlotId)
+		if (slotDetails.SlotType == constants.SLOT_TYPE_NORMAL || slotDetails.SlotType == user.UserType) && (slotDetails.NumberOfSeats-len(slots[x].SeatsBooked) > 0) {
+			centre, _ := model.GetCentre(slotDetails.CentreId)
+			availableSessions = append(availableSessions, &AvailableSessionsWrtUser{
+				Distance: model.GetDistance(centre.Location, user.Location),
+				Session:  slots[x],
+				CentreId: slotDetails.CentreId,
+			})
 		}
 	}
-	return errors.New("invalid slot")
+	if len(availableSessions) == 0 {
+		return nil, errors.New("no sessions available for today")
+	}
+	sort.Slice(availableSessions, func(i, j int) bool {
+		return availableSessions[i].Distance < availableSessions[j].Distance
+	})
+	return availableSessions, nil
 }
 
-func CancelSession(userId uint64, day int) error {
-	user, ok := Users[userId]
-	if !ok {
-		return errors.New("user is not registered")
+func BookSession(userId uint64, session *model.WorkoutSession) (uint64, error) {
+	user, err := model.GetUserById(userId)
+	if err != nil {
+		return 0, err
 	}
-	ws := user.GetAllBookedSlots(day)
-	if ws == nil {
-		return errors.New("no booked slots present")
+
+	slotDetails, err := model.GetWorkSlotById(session.WorkoutSlotId)
+	if err != nil {
+		return 0, errors.New("invalid centre")
 	}
-	ws[0].CancelSlot(user, day)
+
+	if err := user.CheckDateSlots(session.Date, slotDetails.CentreId); err != nil {
+		return 0, err
+	}
+
+	bookingId, err := session.BookSlot(user)
+	if err != nil {
+		return 0, err
+	}
+	return bookingId, nil
+}
+
+func CancelNextSession(userId uint64) error {
+	user, _ := model.GetUserById(userId)
+	curDate := time.Now().Format("2006-01-02")
+	bookings := user.GetAllConfirmedBookingsByDate(curDate)
+	if len(bookings) == 0 {
+		return errors.New("no confirmed bookings for today")
+	}
+	session, _ := model.GetWorkoutSessionById(bookings[0].SessionId)
+	session.CancelSession(bookings[0])
 	return nil
-}
-
-func GetUserBookedSlotsForDay(userId uint64, day int) ([]*domain.WorkoutSlot, error) {
-	user, ok := Users[userId]
-	if !ok {
-		return nil, errors.New("user is not registered")
-	}
-	return user.GetAllBookedSlots(day), nil
 }

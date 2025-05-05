@@ -1,5 +1,7 @@
 package constants
 
+import "time"
+
 const (
 	FK_VIP_USER = iota + 1
 	FK_NORMAL_USER
@@ -15,6 +17,13 @@ const (
 	WorkoutType_YOGA
 	WorkoutType_SWIMMING
 	WorkoutType_WEIGHTS
+)
+
+const (
+	Booking_Confirmed = iota + 1
+	Booking_Cancelled
+	Booking_Waiting
+	Booking_New
 )
 
 var workoutTypes []int
@@ -33,3 +42,8 @@ const (
 	SATURDAY
 	SUNDAY
 )
+
+func GetWeekday(date string) int {
+	curDate, _ := time.Parse("2006-01-02 15:04:05", date+"  00:00:00")
+	return int(curDate.Weekday())
+}

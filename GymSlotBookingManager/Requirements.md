@@ -1,7 +1,6 @@
-# FlipFit
+# Gym Session Booking System
 
-### Design a backend system for a new enterprise application that Flipkart is launching, FlipFit.
-#### Flipkart is partnering up with gyms across Bangalore to enter into the fitness space. For the Beta launch the requirements are as follows:
+#### Requirements
 
 - There are multiple centers in Bangalore. We can expand to multiple cities across and beyond India.
 - Each center has n slots of an hour each. For eg the Bellandur center has only 6 slots - 3 in the morning of an hour each from 6 am to 9 am and similarly 3 in the evening from 6 pm to 9 pm. All the centers might/might not be open 7 days a week.
@@ -19,7 +18,6 @@
 5. Cancel his/her workout and the slot should be accommodated by the immediate person in the queue and while filling the slot VIP customers should be given the priority. Once all the VIP customers in the queue are allocated then the normal customers are allocated.
 
 #### Test cases:
-#### Following functionality will be tested via tests  during evaluation :
 - Addition of center with appropriate details like name,city,location,lat,long
 - Addition of new workout Types in a particular center
 - Addition/Deletion of slots given a center,workoutType, startTime, number of seats & waiting list queue size
@@ -31,14 +29,3 @@
 - viewUserBooking(userId,date) 
 - cancel slot for a user given a slot & centerName, VIP customers should be allocated first and then normal users
 - Notify appropriate users (one who is  canceling, one who is moving from waiting queue)
-
-
-#### Guidelines:
-- Time: 120  mins. 
-- Write modular, clean and demo-able code (Test cases or runtime execution). 
-- A driver program/main class/test case is needed to test out the code by the evaluator with multiple test cases.
-- Use design patterns wherever applicable
-- Please handle concurrency wherever applicable.
-- Evaluation criteria:  Demoable & functionally correct code, Code readability, Proper Entity modeling, Modularity & Extensibility, Separation of concerns, Abstractions, Exception Handling, Code comments.
-- You are not allowed to use any external databases like MySQL. Use only in-memory data structures.
-- No need to create any UX or any HTTP API. It should be a standalone application.

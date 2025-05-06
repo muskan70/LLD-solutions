@@ -8,7 +8,7 @@
 + [Cricket Scoreboard](./CricketScoreboard)
 + [Cron Parser](./CronParser)
 + [Gaming Score Board System](./GamingScoreBoardSystem)
-+ [Gym Centre Slot Booking System](./GymSlotBookingManager)
++ [Gym Centre Session Booking System](./GymSlotBookingManager)
 + [Logging System](./LoggingSystem)
 + [Meeting Scheduler](./MeetingScheduler)
 + [Movie Ticket Booking System](./MovieTicketBookingSystem)

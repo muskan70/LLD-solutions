@@ -47,3 +47,7 @@ func GetWeekday(date string) int {
 	curDate, _ := time.Parse("2006-01-02 15:04:05", date+"  00:00:00")
 	return int(curDate.Weekday())
 }
+
+func GetTodayDate() string {
+	return time.Now().Format("2006-01-02")
+}

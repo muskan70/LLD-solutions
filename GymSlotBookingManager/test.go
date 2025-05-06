@@ -6,25 +6,26 @@ import (
 	"flip/usecase"
 	"fmt"
 	"math/rand"
+	"strconv"
 	"sync"
 )
 
 func GetAvailableSessionsAndBookRandomSession(userId uint64, workoutType int, date string, wg *sync.WaitGroup) {
 	workouts, err := usecase.GetAvailableSessions(userId, workoutType, date)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println("Available sessions Error for userId:", userId, "->", err.Error())
 		wg.Done()
 		return
 	} else {
-		fmt.Print("workout Slots for ", userId, ":")
+		sessionIds := []uint64{}
 		for i := range workouts {
-			fmt.Print(" ", workouts[i].Session.Id)
+			sessionIds = append(sessionIds, workouts[i].Session.Id)
 		}
-		fmt.Println()
+		fmt.Println("Workout Sessions for ", userId, ":", sessionIds)
 	}
 	idx := rand.Intn(len(workouts))
 	if bookingId, err := usecase.BookSession(userId, workouts[idx].Session); err != nil {
-		fmt.Println(userId, "Error:", err.Error())
+		fmt.Println("Booking Session Error for userId:", userId, "->", err.Error())
 	} else {
 		fmt.Println("sessionId:", workouts[idx].Session.Id, " booked successfully by userId:", userId, "with bookingId:", bookingId)
 	}
@@ -32,6 +33,7 @@ func GetAvailableSessionsAndBookRandomSession(userId uint64, workoutType int, da
 }
 
 func test() {
+	// Create centre1
 	centreId1, err := model.NewCentre("Kormangalam", model.NewLocation(2, 2))
 	if err != nil {
 		fmt.Println(err.Error())
@@ -52,59 +54,98 @@ func test() {
 		fmt.Println(err.Error())
 	}
 
-	slotId1, err := usecase.CreateWorkoutSlot(centreId1, constants.WorkoutType_WEIGHTS, 6, 1, constants.SLOT_TYPE_NORMAL, []int{constants.MONDAY, constants.WEDNESDAY, constants.FRIDAY}, 100)
+	//Add slots in centreId1 -> 1 : normal slot, 2 : premium slot
+	slotId1, err := usecase.CreateWorkoutSlot(centreId1, constants.WorkoutType_WEIGHTS, 6, 1, constants.SLOT_TYPE_NORMAL, []int{constants.MONDAY, constants.TUESDAY, constants.WEDNESDAY, constants.THRUSDAY, constants.FRIDAY}, 100)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		fmt.Println("SlotId Created:", slotId1)
 	}
 
-	slotId2, err := usecase.CreateWorkoutSlot(centreId1, constants.WorkoutType_WEIGHTS, 7, 1, constants.SLOT_TYPE_PREMIUM, []int{constants.MONDAY, constants.THRUSDAY}, 150)
+	slotId2, err := usecase.CreateWorkoutSlot(centreId1, constants.WorkoutType_WEIGHTS, 7, 1, constants.SLOT_TYPE_PREMIUM, []int{constants.MONDAY, constants.TUESDAY, constants.THRUSDAY}, 150)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		fmt.Println("SlotId Created:", slotId2)
 	}
 
+	// Create centre2
+	centreId2, err := model.NewCentre("Kasturinagar", model.NewLocation(4, 4))
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("CentreId Created:", centreId2)
+	}
+
+	centre, _ = model.GetCentre(centreId2)
+	timings = []model.Timing{
+		{StartTime: 6, EndTime: 9},
+		{StartTime: 17, EndTime: 21},
+	}
+	if err := centre.AddTimings(timings); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	if err := centre.AddWorkoutTypes([]int{constants.WorkoutType_WEIGHTS, constants.WorkoutType_CARDIO, constants.WorkoutType_YOGA}); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//Add slots in centreId1 -> 1 : normal slot, 2 : premium slot, 3: premium slot
+	slotId1, err = usecase.CreateWorkoutSlot(centreId2, constants.WorkoutType_WEIGHTS, 6, 1, constants.SLOT_TYPE_NORMAL, []int{constants.MONDAY, constants.TUESDAY, constants.WEDNESDAY, constants.FRIDAY}, 100)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("SlotId Created:", slotId1)
+	}
+
+	slotId2, err = usecase.CreateWorkoutSlot(centreId2, constants.WorkoutType_WEIGHTS, 7, 1, constants.SLOT_TYPE_PREMIUM, []int{constants.MONDAY, constants.TUESDAY, constants.THRUSDAY}, 150)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("SlotId Created:", slotId2)
+	}
+
+	slotId3, err := usecase.CreateWorkoutSlot(centreId2, constants.WorkoutType_YOGA, 7, 1, constants.SLOT_TYPE_PREMIUM, []int{constants.MONDAY, constants.TUESDAY, constants.FRIDAY}, 150)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("SlotId Created:", slotId3)
+	}
+
 	model.FillSessionsForWeek(centreId1)
+	model.FillSessionsForWeek(centreId2)
 
-	userId1, err := model.NewUser("muskan", 9678932421, model.NewLocation(1, 1), constants.FK_VIP_USER)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("UserId created:", userId1)
+	for i := 0; i < 3; i++ {
+		userId, err := model.NewUser(strconv.Itoa(97+i)+"xyz", 9678932421, model.NewLocation(float64(i+1), float64(i+2)), constants.FK_VIP_USER)
+		if err != nil {
+			fmt.Println(err.Error())
+		} else {
+			fmt.Println("UserId created:", userId)
+		}
 	}
 
-	userId2, err := model.NewUser("vipul", 9756397683, model.NewLocation(4, 6), constants.FK_NORMAL_USER)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("UserId created:", userId2)
+	for i := 0; i < 3; i++ {
+		userId, err := model.NewUser(strconv.Itoa(97+i+5)+"xyz", 9678932421, model.NewLocation(float64(i+2), float64(i+1)), constants.FK_NORMAL_USER)
+		if err != nil {
+			fmt.Println(err.Error())
+		} else {
+			fmt.Println("UserId created:", userId)
+		}
 	}
 
-	userId3, err := model.NewUser("yash", 9999888877, model.NewLocation(2, 3), constants.FK_VIP_USER)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("UserId created:", userId3)
-	}
 	wg := new(sync.WaitGroup)
-	wg.Add(3)
 
-	go GetAvailableSessionsAndBookRandomSession(userId1, constants.WorkoutType_WEIGHTS, "2025-05-05", wg)
-	go GetAvailableSessionsAndBookRandomSession(userId2, constants.WorkoutType_WEIGHTS, "2025-05-05", wg)
-	go GetAvailableSessionsAndBookRandomSession(userId3, constants.WorkoutType_WEIGHTS, "2025-05-05", wg)
+	for i := 1; i <= 6; i++ {
+		wg.Add(1)
+		go GetAvailableSessionsAndBookRandomSession(uint64(i), constants.WorkoutType_WEIGHTS, constants.GetTodayDate(), wg)
+	}
 
 	wg.Wait()
 
-	if err := usecase.CancelNextSession(userId1); err != nil {
-		fmt.Println(userId1, err)
-	}
-	if err := usecase.CancelNextSession(userId2); err != nil {
-		fmt.Println(userId2, err)
-	}
-	if err := usecase.CancelNextSession(userId3); err != nil {
-		fmt.Println(userId3, err)
+	for i := 1; i <= 6; i++ {
+		if err := usecase.CancelNextSession(uint64(i)); err != nil {
+			fmt.Println("userId:", i, err)
+		}
 	}
 
 }

@@ -69,6 +69,9 @@ func (u *User) AddBooking(bookingId uint64, date string) error {
 
 func (u *User) GetAllConfirmedBookingsByDate(date string) []*Booking {
 	bookings := []*Booking{}
+	if _, ok := u.DatewiseBookedSlots[date]; !ok {
+		return bookings
+	}
 	for _, bookingId := range u.DatewiseBookedSlots[date] {
 		booking, _ := GetBookingById(bookingId)
 		if booking.Status == constants.Booking_Confirmed {

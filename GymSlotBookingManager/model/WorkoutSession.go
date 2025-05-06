@@ -48,6 +48,7 @@ func NewWorkoutSession(slotId uint64) error {
 		}
 		WorkoutSchedule[curDate][ws.WorkoutType] = append(WorkoutSchedule[curDate][ws.WorkoutType], session.Id)
 		WorkoutSessions[session.Id] = session
+		fmt.Println("Workout Session created:", session.Id, "for slotId:", slotId, curDate)
 	}
 	return nil
 }

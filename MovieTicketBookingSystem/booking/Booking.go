@@ -12,13 +12,15 @@ type Booking struct {
 	Id            uint64
 	ShowId        uint64
 	Seats         []*theatre.Seat
+	UserId        uint64
 	BookingStatus int
 }
 
-func NewBooking(showId uint64, seats []*theatre.Seat) *Booking {
+func NewBooking(showId, userId uint64, seats []*theatre.Seat) *Booking {
 	return &Booking{
 		Id:            bookingId.Add(1),
 		ShowId:        showId,
+		UserId:        userId,
 		Seats:         seats,
 		BookingStatus: constants.BOOKING_STATUS_PENDING,
 	}

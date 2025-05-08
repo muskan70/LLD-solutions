@@ -8,22 +8,20 @@
 
 ### API documentation
 
-1. POST 'http://localhost:5000/api/user/register'
-Body : 
-{
+1. POST 'http://localhost:5000/api/user/register' \
+-- data '{
     "email":"muskanmangla70@gmail.com",
     "name":"muskan",
     "password":"XXXXXXXX",
     "organization":"manan"
-}
+}'
 
 
-2. POST 'http://localhost:5000/api/user/login'
-Body :
-{
+2. POST 'http://localhost:5000/api/user/login' \
+-- data '{
     "email":"muskanmangla70@gmail.com",
     "password":"XXXXXXXX"
-}
+}'
 
 
 3. GET 'http://localhost:5000/status'**

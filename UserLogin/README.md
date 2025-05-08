@@ -24,7 +24,7 @@
 }'
 
 
-3. GET 'http://localhost:5000/status'**
+3. GET 'http://localhost:5000/status'
 
 4. GET 'http://localhost:5000/dashboard' \
 --header 'Content-Type: application/json' \

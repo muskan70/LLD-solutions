@@ -11,7 +11,7 @@ type Seat struct {
 
 func NewSeat(rowNo, colNo, category int) *Seat {
 	return &Seat{
-		Id:           GetRowString(rowNo) + string(colNo),
+		Id:           GetRowString(rowNo) + strconv.Itoa(colNo),
 		RowNo:        rowNo,
 		ColNo:        colNo,
 		SeatCategory: category,
@@ -22,7 +22,7 @@ func GetRowString(rowNo int) string {
 	rowId := ""
 	if rowNo > 26 {
 		d := rowNo / 26
-		rowId += strconv.Itoa(d + 64)
+		rowId += string(d + 64)
 		rowNo = rowNo % 26
 	}
 	rowId += strconv.Itoa(rowNo)

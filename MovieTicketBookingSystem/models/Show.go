@@ -1,4 +1,4 @@
-package theatre
+package models
 
 import (
 	"sync"
@@ -20,16 +20,18 @@ type Show struct {
 	StartTime      time.Time
 	Duration       int
 	MovieId        uint64
-	SeatsStatusMap map[uint64]*SeatLock
+	SeatsStatusMap map[string]*SeatLock
 }
 
 func NewShow(screen *Screen, movieId uint64, showTime time.Time) *Show {
-	seatsMap := make(map[uint64]*SeatLock)
-	seats := screen.GetSeats()
+	seatsMap := make(map[string]*SeatLock)
+	seats := screen.GetSeatsLayout()
 	for i := range seats {
-		seatsMap[seats[i].SeatNo] = &SeatLock{
-			Status: constants.SEAT_STATUS_AVAILABLE,
-			Lock:   sync.Mutex{},
+		for j := range seats[i] {
+			seatsMap[seats[i][j].Id] = &SeatLock{
+				Status: constants.SEAT_STATUS_AVAILABLE,
+				Lock:   sync.Mutex{},
+			}
 		}
 	}
 	return &Show{
@@ -41,24 +43,24 @@ func NewShow(screen *Screen, movieId uint64, showTime time.Time) *Show {
 	}
 }
 
-func (s *Show) CheckSeatAvailability(seatNo uint64) bool {
-	sL, ok := s.SeatsStatusMap[seatNo]
+func (s *Show) CheckSeatAvailability(seatId string) bool {
+	sL, ok := s.SeatsStatusMap[seatId]
 	return ok && sL.Status == constants.SEAT_STATUS_AVAILABLE
 }
 
-func (s *Show) UpdateSeatStatus(seatNo uint64, status int) {
-	if sL, ok := s.SeatsStatusMap[seatNo]; ok {
+func (s *Show) UpdateSeatStatus(seatId string, status int) {
+	if sL, ok := s.SeatsStatusMap[seatId]; ok {
 		sL.Lock.Lock()
 		defer sL.Lock.Unlock()
 		sL.Status = status
 	}
 }
 
-func (s *Show) GetAvailableSeats() []uint64 {
-	var seats []uint64
-	for seatNo, seatLock := range s.SeatsStatusMap {
+func (s *Show) GetAvailableSeats() []string {
+	var seats []string
+	for seatId, seatLock := range s.SeatsStatusMap {
 		if seatLock.Status == constants.SEAT_STATUS_AVAILABLE {
-			seats = append(seats, seatNo)
+			seats = append(seats, seatId)
 		}
 	}
 	return seats

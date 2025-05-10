@@ -1,4 +1,4 @@
-package movie
+package models
 
 import (
 	"fmt"
@@ -10,19 +10,19 @@ var movieId atomic.Uint64
 
 type Movie struct {
 	Id          uint64
-	Name        string
+	Title       string
 	Description string
-	Language    string
+	Languages   []int
 	Genre       string
 	ReleaseDate time.Time
 	Duration    time.Duration
-	Actors      []Actor
+	Cast        []uint64
 }
 
 func NewMovie(name string) *Movie {
 	return &Movie{
-		Id:   movieId.Add(1),
-		Name: name,
+		Id:    movieId.Add(1),
+		Title: name,
 	}
 }
 
@@ -30,12 +30,12 @@ func (m *Movie) SetDescription(despt string) {
 	m.Description = despt
 }
 
-func (m *Movie) SetLanguage(lang string) {
-	m.Language = lang
+func (m *Movie) SetLanguages(lang []int) {
+	m.Languages = append(m.Languages, lang...)
 }
 
 func (m *Movie) SetGenre(genre string) {
-	m.Language = genre
+	m.Genre = genre
 }
 
 func (m *Movie) SetReleaseDate(date string) {
@@ -44,4 +44,8 @@ func (m *Movie) SetReleaseDate(date string) {
 	} else {
 		m.ReleaseDate = releaseDate
 	}
+}
+
+func (m *Movie) AddActors(actorIds []uint64) {
+	m.Cast = append(m.Cast, actorIds...)
 }

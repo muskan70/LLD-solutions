@@ -32,12 +32,12 @@
 - Attributes => theatreId, Address, theatre Name, total halls
 - Methods    => CRUD of Theatre
 
-3. Theatre Hall
-- Attributes => hall Id, hall Name, total seats
-- Methods    => CRUD of Theatre Hall
+3. Screen
+- Attributes => screenId, screen Name, theatreId, total seats
+- Methods    => CRUD of Screen
 
 4. Seat
-- Attributes => SeatNo, Row No, Column No, SeatType {Regular, Premium}
+- Attributes => SeatId, Row No, Column No, SeatType {Regular, Premium}
 - Methods    => CRUD of Seat
 
 5. Movie
@@ -45,7 +45,7 @@
 - Methods    => CRUD of Movie
 
 6. Show
-- Attributes => ShowId, MovieId, theatreId, hall Id, startTime, endTime, date, map{SeatNo}SeatLock
+- Attributes => ShowId, MovieId,  scrrenId, startTime, endTime, date, map{SeatNo}SeatLock
 - Methods    => AddShow(), GetSeatsStatus()
 
 7. Seat Lock
@@ -65,14 +65,17 @@
 - Methods    => SendNotification()
 
 11. Catalog : List{Movie}
-- Methods => SearchMovieByReleaseDate(), SearchMovieByTitle(), SearchMovieByLanguage(), SearchMovieByGenre(), SearchMovieByCity()
+- Methods => SearchMovie(SearchParams)
+
+12. SearchParams
+- city, genre, title, language, release date
 
 ![Class Diagram](./ClassDiagram.png)
 
 ### Entity Relationship:
-1. theatre to theatre Hall => 1:n 
-2. theatre Hall to seat => 1:n
-3. theatre Hall to show => 1:n
+1. theatre to screen => 1:n 
+2. screen to seat => 1:n
+3. screen to show => 1:n
 4. show to show seat => 1:n
 5. user to booking => 1:n
 6. Booking to payment => 1:1

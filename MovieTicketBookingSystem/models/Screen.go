@@ -42,6 +42,6 @@ func (s *Screen) SetSeatsLayout(rows, columns int) {
 	}
 }
 
-func (s *Screen) GetSeatsLayout() [][]*Seat {
+func (s *Screen) GetScreenSeatsLayout() [][]*Seat {
 	return s.Seats
 }

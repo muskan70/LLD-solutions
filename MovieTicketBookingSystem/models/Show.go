@@ -17,18 +17,22 @@ type SeatLock struct {
 type Show struct {
 	Id        uint64
 	ScreenId  uint64
-	StartTime string
+	ShowTime  string
+	Date      string
 	Duration  int
 	MovieId   uint64
+	Language  int
 	ShowSeats map[string]*SeatLock
 }
 
-func NewShow(screen *Screen, movieId uint64, showTime string, prices map[int]float64) *Show {
+func NewShow(screen *Screen, movieId uint64, showTime string, date string, prices map[int]float64, lang int) *Show {
 	show := &Show{
-		Id:        showId.Add(1),
-		ScreenId:  screen.Id,
-		MovieId:   movieId,
-		StartTime: showTime,
+		Id:       showId.Add(1),
+		ScreenId: screen.Id,
+		MovieId:  movieId,
+		ShowTime: showTime,
+		Date:     date,
+		Language: lang,
 	}
 	show.fillShowSeats(screen, prices)
 	return show
@@ -36,7 +40,7 @@ func NewShow(screen *Screen, movieId uint64, showTime string, prices map[int]flo
 
 func (s *Show) fillShowSeats(screen *Screen, prices map[int]float64) {
 	seatsMap := make(map[string]*SeatLock)
-	seats := screen.GetSeatsLayout()
+	seats := screen.GetScreenSeatsLayout()
 	for i := range seats {
 		for j := range seats[i] {
 			price := prices[constants.SEAT_CATEGORY_PLATINUM]
@@ -64,14 +68,13 @@ func (s *Show) UpdateSeatStatus(seatId string, status int, wg *sync.WaitGroup) {
 		defer sL.Lock.Unlock()
 		sL.Status = status
 	}
+	wg.Done()
 }
 
-func (s *Show) GetAvailableSeats() []string {
-	var seats []string
+func (s *Show) GetSeatsLayoutWithStatus() map[string]int {
+	seats := make(map[string]int)
 	for seatId, seatLock := range s.ShowSeats {
-		if seatLock.Status == constants.SEAT_STATUS_AVAILABLE {
-			seats = append(seats, seatId)
-		}
+		seats[seatId] = seatLock.Status
 	}
 	return seats
 }

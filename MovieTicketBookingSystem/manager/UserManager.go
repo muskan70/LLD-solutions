@@ -21,7 +21,8 @@ func (m *UserManager) GetUserById(userId uint64) *models.User {
 	return m.users[userId]
 }
 
-func (m *UserManager) CreateUser(name, email string, phone int) {
+func (m *UserManager) CreateUser(name, email string, phone int) uint64 {
 	user := models.NewUser(name, email, phone)
 	m.users[user.UserId] = user
+	return user.UserId
 }

@@ -1,12 +1,8 @@
 package services
 
 import (
-	"slices"
 	"ticketBooking/manager"
-	"time"
 )
-
-var searchService *SearchCatalogue
 
 type SearchCatalogue struct {
 	MovieManager   *manager.MovieManager
@@ -15,44 +11,42 @@ type SearchCatalogue struct {
 }
 
 func NewSearchService(m *manager.MovieManager, t *manager.TheatreManager, s *manager.ShowManager) *SearchCatalogue {
-	searchService := &SearchCatalogue{
+	return &SearchCatalogue{
 		MovieManager:   m,
 		TheatreManager: t,
 		ShowManager:    s,
 	}
-	return searchService
 }
 
 type SearchParams struct {
-	City     string     // mandatory
-	Genre    *int       // optional
-	Language *int       // optional
-	Title    *string    // optional
-	Date     *time.Time // optional
+	City     string  // mandatory
+	Date     string  //manatory
+	Genre    *int    // optional
+	Language *int    // optional
+	Title    *string // optional
 }
 
-func (s *SearchParams) IsSatisfiedBy(movieId uint64) bool {
+func (s *SearchParams) IsSatisfiedBy(searchService *SearchCatalogue, movieId uint64, showId uint64) bool {
 	movie := searchService.MovieManager.GetMovieById(movieId)
-	if s.Genre != nil && movie.Genre != (*s.Genre) {
-		return false
-	}
-	if s.Language != nil && !slices.Contains(movie.Languages, *s.Language) {
-		return false
-	}
 	if s.Title != nil && movie.Title != (*s.Title) {
 		return false
 	}
-	if s.Date != nil && !movie.ReleaseDate.Before(*s.Date) {
+	if s.Genre != nil && movie.Genre != (*s.Genre) {
 		return false
 	}
+	show := searchService.ShowManager.GetShowById(showId)
+	if s.Language != nil && show.Language != *(s.Language) {
+		return false
+	}
+
 	return true
 }
 
 func (s *SearchCatalogue) SearchMovie(scrh *SearchParams) map[uint64][]uint64 {
 	movieShows := make(map[uint64][]uint64)
-	for _, showId := range s.ShowManager.GetShowsByCity(scrh.City) {
+	for _, showId := range s.ShowManager.GetShowsByCity(scrh.City, scrh.Date) {
 		movieId := s.ShowManager.GetMovieIdByShowId(showId)
-		if scrh.IsSatisfiedBy(movieId) {
+		if scrh.IsSatisfiedBy(s, movieId, showId) {
 			movieShows[movieId] = append(movieShows[movieId], showId)
 		}
 	}

@@ -25,7 +25,7 @@ func GetRowString(rowNo int) string {
 		rowId += string(d + 64)
 		rowNo = rowNo % 26
 	}
-	rowId += strconv.Itoa(rowNo)
+	rowId += string(rowNo + 64)
 	return rowId
 }
 

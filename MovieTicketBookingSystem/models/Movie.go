@@ -9,14 +9,14 @@ import (
 var movieId atomic.Uint64
 
 type Movie struct {
-	Id          uint64
-	Title       string
-	Description string
-	Languages   []int
-	Genre       string
-	ReleaseDate time.Time
-	Duration    time.Duration
-	Cast        []uint64
+	Id                uint64
+	Title             string
+	Description       string
+	Languages         []int
+	Genre             int
+	ReleaseDate       time.Time
+	DurationInMinutes int
+	Cast              []uint64
 }
 
 func NewMovie(name string) *Movie {
@@ -30,11 +30,15 @@ func (m *Movie) SetDescription(despt string) {
 	m.Description = despt
 }
 
+func (m *Movie) SetDuration(timeInMins int) {
+	m.DurationInMinutes = timeInMins
+}
+
 func (m *Movie) SetLanguages(lang []int) {
 	m.Languages = append(m.Languages, lang...)
 }
 
-func (m *Movie) SetGenre(genre string) {
+func (m *Movie) SetGenre(genre int) {
 	m.Genre = genre
 }
 

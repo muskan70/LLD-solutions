@@ -2,18 +2,19 @@ package services
 
 import (
 	"slices"
+	"ticketBooking/manager"
 	"time"
 )
 
 var searchService *SearchCatalogue
 
 type SearchCatalogue struct {
-	MovieManager   *MovieManager
-	TheatreManager *TheatreManager
-	ShowManager    *ShowManager
+	MovieManager   *manager.MovieManager
+	TheatreManager *manager.TheatreManager
+	ShowManager    *manager.ShowManager
 }
 
-func NewSearchService(m *MovieManager, t *TheatreManager, s *ShowManager) *SearchCatalogue {
+func NewSearchService(m *manager.MovieManager, t *manager.TheatreManager, s *manager.ShowManager) *SearchCatalogue {
 	searchService := &SearchCatalogue{
 		MovieManager:   m,
 		TheatreManager: t,
@@ -49,7 +50,7 @@ func (s *SearchParams) IsSatisfiedBy(movieId uint64) bool {
 
 func (s *SearchCatalogue) SearchMovie(scrh *SearchParams) map[uint64][]uint64 {
 	movieShows := make(map[uint64][]uint64)
-	for _, showId := range s.ShowManager.showsByCity[scrh.City] {
+	for _, showId := range s.ShowManager.GetShowsByCity(scrh.City) {
 		movieId := s.ShowManager.GetMovieIdByShowId(showId)
 		if scrh.IsSatisfiedBy(movieId) {
 			movieShows[movieId] = append(movieShows[movieId], showId)

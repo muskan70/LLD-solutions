@@ -1,4 +1,4 @@
-package services
+package manager
 
 import (
 	"ticketBooking/models"
@@ -7,23 +7,23 @@ import (
 var movieManager *MovieManager
 
 type MovieManager struct {
-	Movies map[uint64]*models.Movie
+	movies map[uint64]*models.Movie
 }
 
 func NewMovieManager() *MovieManager {
 	movieManager = &MovieManager{
-		Movies: make(map[uint64]*models.Movie),
+		movies: make(map[uint64]*models.Movie),
 	}
 	return movieManager
 }
 
 func (m *MovieManager) GetMovieById(MovieId uint64) *models.Movie {
-	return m.Movies[MovieId]
+	return m.movies[MovieId]
 }
 
 func (m *MovieManager) CreateMovie(name, description string, duration int, languages []int, genre int, releaseDate string) {
 	movie := models.NewMovie(name)
-	m.Movies[movie.Id] = movie
+	m.movies[movie.Id] = movie
 	movie.SetDescription(description)
 	movie.SetDuration(duration)
 	movie.SetLanguages(languages)

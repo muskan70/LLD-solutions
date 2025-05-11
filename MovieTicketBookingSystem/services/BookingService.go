@@ -4,11 +4,14 @@ import (
 	"errors"
 	"sync"
 	"ticketBooking/constants"
+	"ticketBooking/manager"
 	"ticketBooking/models"
 )
 
 type BookingService struct {
-	Bookings map[uint64]*models.Booking
+	ShowManager      *manager.ShowManager
+	Bookings         map[uint64]*models.Booking
+	BookingsByUserId map[uint64][]uint64
 }
 
 func NewBookingService() *BookingService {
@@ -21,8 +24,12 @@ func (b *BookingService) GetBookingById(bookingId uint64) *models.Booking {
 	return b.Bookings[bookingId]
 }
 
+func (b *BookingService) GetBookingByUserId(id uint64) []uint64 {
+	return b.BookingsByUserId[id]
+}
+
 func (b *BookingService) BookTickets(userId, showId uint64, seatIds []string) error {
-	show := showManager.GetShowById(showId)
+	show := b.ShowManager.GetShowById(showId)
 	for _, id := range seatIds {
 		if !show.CheckSeatAvailability(id) {
 			return errors.New("seats not available")
@@ -37,12 +44,13 @@ func (b *BookingService) BookTickets(userId, showId uint64, seatIds []string) er
 
 	ticket := models.NewBooking(showId, userId, seatIds)
 	b.Bookings[ticket.Id] = ticket
+	b.BookingsByUserId[userId] = append(b.BookingsByUserId[userId], ticket.Id)
 	return nil
 }
 
 func (b *BookingService) CancelTickets(bookingId uint64) {
 	booking := b.GetBookingById(bookingId)
-	show := showManager.GetShowById(booking.ShowId)
+	show := b.ShowManager.GetShowById(booking.ShowId)
 
 	wg := &sync.WaitGroup{}
 	wg.Add(len(booking.SeatIds))

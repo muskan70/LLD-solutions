@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"splitGo/entity"
-	"splitGo/utils"
+	"splitwise/entity"
+	"splitwise/utils"
 )
 
 func main() {

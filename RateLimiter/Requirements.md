@@ -4,6 +4,7 @@
 1. System should be able to set rules for throttling different APIs with respect to either userId or IPaddress.
 2. System should support multiple rate limiting algorithms.
 3. Rule should be based on Noof Requests allowed per minute.
+4. Rules can be changed dynamically and next requests should be handled according to new ruled.
 
 ### Core Components
 1. ThrottleConfig

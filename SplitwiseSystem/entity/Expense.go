@@ -2,7 +2,7 @@ package entity
 
 import (
 	"errors"
-	"splitGo/utils"
+	"splitwise/utils"
 )
 
 type Expense struct {

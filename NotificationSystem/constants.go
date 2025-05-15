@@ -1,0 +1,21 @@
+package main
+
+const (
+	CHANNEL_EMAIL = iota + 1
+	CHANNEL_SMS
+	CHANNEL_PUSH
+)
+
+const (
+	PRIORITY_LOW = iota + 1
+	PRIORITY_HIGH
+	PRIORITY_MEDIUM
+)
+
+const (
+	STATUS_NEW = iota + 1
+	STATUS_SENT
+	STATUS_FAILED
+	STATUS_IN_TRANSIT
+	STATUS_CANCELLED
+)

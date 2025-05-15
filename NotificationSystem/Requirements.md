@@ -4,11 +4,11 @@ You need to implement a service that schedules and sends notifications (email, S
 
 ### Requirements:
 - Create Notification – Schedule a notification with:
-> UserID
-> Channel (Email, SMS, Push)
-> Message
-> ScheduledTime (UTC)
-> Priority (LOW, MEDIUM, HIGH)
+> UserID<br>
+> Channel (Email, SMS, Push)<br>
+> Message<br>
+> ScheduledTime (UTC)<br>
+> Priority (LOW, MEDIUM, HIGH)<br>
 - Update Notification – Update the scheduled time or message of a pending notification.
 - Delete Notification – Cancel a scheduled notification.
 - List Notifications – List all scheduled notifications for a user.

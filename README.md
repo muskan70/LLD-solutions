@@ -14,6 +14,7 @@
 + [Movie Ticket Booking System](./MovieTicketBookingSystem)
 + [MultiAttribute Key-Value Cache System](./MultiAttributeKeyValueCacheSystem)
 + [N-elevator System](./NElevatorSystem)
++ [NotificationSystem](./NotificationSystem)
 + [Parking Lot](./ParkingLot)
 + [Publisher Subscriber System](./PublisherSubcriberSystem) : Pull Based Architecture, Observer Design Pattern
 + [Rate Limiter](./RateLimiter)

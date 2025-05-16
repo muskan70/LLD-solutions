@@ -1,31 +1,31 @@
 ## LLD-solutions
-+ [Amazon Locker System](./AmazaonLockerSystem)
++ [Amazon Locker System](./AmazaonLockerSystem/Requirements.md)
 + [Book Manager](./BookManager)
-+ [Build in Cache Library](./CacheSystem) : Strategy Design Pattern
-+ [Chat Server App](./ChatServerApp) 
-+ [Chess Game](./ChessGame)
++ [Build in Cache Library](./CacheSystem/InMemoryCacheWithStrategyPattern) : Strategy Design Pattern
++ [Chat Server App](./ChatServerApp/Requirements.md) 
++ [Chess Game](./ChessGame/Requirements.md)
 + [Course Curriculum manager](./CourseCurriculumManager)
-+ [Cricket Scoreboard](./CricketScoreboard)
-+ [Cron Parser](./CronParser)
++ [Cricket Scoreboard](./CricketScoreboard/Readme.md)
++ [Cron Parser](./CronParser/README.md)
 + [Gaming Score Board System](./GamingScoreBoardSystem)
-+ [Gym Centre Session Booking System](./GymSlotBookingManager)
-+ [Logging System](./LoggingSystem)
-+ [Meeting Scheduler](./MeetingScheduler)
-+ [Movie Ticket Booking System](./MovieTicketBookingSystem)
++ [Gym Centre Session Booking System](./GymSlotBookingManager/Requirements.md)
++ [Logging System](./LoggingSystem/README.md)
++ [Meeting Scheduler](./MeetingScheduler/Requirements.md)
++ [Movie Ticket Booking System](./MovieTicketBookingSystem/Requirements.md)
 + [MultiAttribute Key-Value Cache System](./MultiAttributeKeyValueCacheSystem)
 + [N-elevator System](./NElevatorSystem)
-+ [NotificationSystem](./NotificationSystem)
++ [NotificationSystem](./NotificationSystem/Requirements.md)
 + [Parking Lot](./ParkingLot)
-+ [Publisher Subscriber System](./PublisherSubcriberSystem) : Pull Based Architecture, Observer Design Pattern
-+ [Rate Limiter](./RateLimiter)
-+ [Snakes and Ladders Game](./SnakesNLaddersGame) : Factory Design Pattern
++ [Publisher Subscriber System](./PublisherSubcriberSystem/Readme.md) : Pull Based Architecture, Observer Design Pattern
++ [Rate Limiter](./RateLimiter/Requirements.md)
++ [Snakes and Ladders Game](./SnakesNLaddersGame/Requirements.md) : Factory Design Pattern
 + [Splitwise](./SplitwiseSystem)
 + [Stack Overflow](./StackOverflowSystem)
 + [Tic Tac Toe Game](./TicTacToeGame)
-+ [Unix file search API](./UnixFileSearchAPI) : Composite Design Pattern, Specification Design Pattern 
-+ [User Login with JWT Authentication](./UserLogin)
++ [Unix file search API](./UnixFileSearchAPI/README.md) : Composite Design Pattern, Specification Design Pattern 
++ [User Login with JWT Authentication](./UserLogin/README.md)
 + [Vending Machine](./VendingMachineSystem) : State Design Pattern, Singleton Pattern 
-+ [Web Scraper with Concurrent Go Routines](./WebScrapingWithConcurrentGoRoutines)
++ [Web Scraper with Concurrent Go Routines](./WebScrapingWithConcurrentGoRoutines/Readme.md)
 
 ### Steps to run above LLD solutions:
 > 1. **create go.mod file** : go mod init {project-name}

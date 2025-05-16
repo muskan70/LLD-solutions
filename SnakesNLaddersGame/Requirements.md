@@ -62,8 +62,8 @@
 >> <br>2
 >> <br>Gaurav 1
 >> <br>Sagar 1
-> Output:
->> Gaurav rolled a 6 and moved from 0 to 6
+> <br>Output:
+>> <br>Gaurav rolled a 6 and moved from 0 to 6
 >> <br>Sagar rolled a 1 and moved from 0 to 1
 >> <br>Gaurav rolled a 6 and moved from 6 to 12
 >> <br>Sagar rolled a 4 and moved from 1 to 5

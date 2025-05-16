@@ -3,20 +3,20 @@ package algo
 import "rateLimiter/constants"
 
 type IRateLimiter interface {
-	IsRequestAllowed()
+	IsRequestAllowed() bool
 }
 
 func RateLimiterFactory(algo int) IRateLimiter {
 	if algo == constants.RATE_LIMITER_TOKEN_BUCKET {
-		return &TokenBucketAlgo{}
+		return NewTokenBucketRateLimiter()
 	} else if algo == constants.RATE_LIMITER_LEAKY_BUCKET {
-		return &LeakyBucketAlgo{}
+		return NewLeakyBucketRateLimiter()
 	} else if algo == constants.RATE_LIMITER_FIXED_WINDOW_COUNTER {
-		return &FixedWindowCounterAlgo{}
+		return NewFixedWindowCounterRateLimiter()
 	} else if algo == constants.RATE_LIMITER_SLIDING_WINDOW_LOG {
-		return &SlidingWindowLogAlgo{}
+		return NewSlidingWindowLogRateLimiter()
 	} else if algo == constants.RATE_LIMITER_SLIDING_WINDOW_COUNTER {
-		return &SlidingWindowCounterAlgo{}
+		return NewSlidingWindowCounterRateLimiter()
 	}
 	return nil
 }

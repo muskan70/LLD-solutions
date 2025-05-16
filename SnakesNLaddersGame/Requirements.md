@@ -39,7 +39,7 @@
 > <br>● N no of players
 > <br>● Following N lines contains names & starting locations of each Player
 > <br>● An override to manually enter the D die values that each player rolled in each turn.
-> 9
+> <br>9
 > <br>62 5
 > <br>33 6
 > <br>49 9

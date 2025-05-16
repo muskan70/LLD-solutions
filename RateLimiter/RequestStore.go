@@ -1,20 +1,18 @@
 package main
 
 import (
-	algo "rateLimiter/RateLimitingAlgo"
 	"rateLimiter/config"
+	algo "rateLimiter/strategies"
 )
 
-type RequestStore map[int]map[int]algo.IRateLimiter
-
-var store RequestStore
+var store map[int]algo.IRateLimiter
 
 func NewStore() {
-	store = make(RequestStore)
+	store = make(map[int]algo.IRateLimiter)
 }
 
-func AddNewRequestStore(apiId, userId int) {
+func AddRequestStoreForAPI(apiId int) {
 	config := config.GetThrottleConfig(apiId)
 	rateLimiter := algo.RateLimiterFactory(config.RateLimiterAlgo)
-	store[apiId][userId] = rateLimiter
+	store[apiId] = rateLimiter
 }

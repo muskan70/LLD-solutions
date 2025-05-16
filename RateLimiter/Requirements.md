@@ -9,8 +9,7 @@
 ### Core Components
 1. ThrottleConfig
 2. RequestStore
-3. RateLimiterAlgorithm
-4. RateLimitSystem
+3. RateLimiterInterface : Rate Limiter Factory
 
 ### Design Patterns
 1. Strategy Pattern : To apply different rate limit algorithms

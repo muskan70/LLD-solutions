@@ -1,8 +1,8 @@
 ## Snakes & Ladders
-- Problem Statement : You have to design & implement a Snakes and Ladders game that supports the following functionality.
+**Problem Statement** : You have to design & implement a Snakes and Ladders game that supports the following functionality.
 
 ### Requirements:
-- Mandatory Requirements: You have to take a configuration (can be a yml/json file) with the following parameters.
+- **Mandatory Requirements**: You have to take a configuration (can be a yml/json file) with the following parameters.
 > Number of players: N<br>
 > Board Size: BS (BS x BS)<br>
 > Number of Snakes: S<br>
@@ -12,12 +12,12 @@
 > Note: Movement strategy is either SUM (sum of numbers on dies), MAX (max of numbers on dies), MIN (min of number on dies).
 - You will be given a sample input to populate the board. Post which the game has to be simulated among N players.
 
-- Rules:
+- **Rules**:
 > - Snake always takes you to the cell where its tail is, and has to be a number less than where you are at currently.
 > - Ladder takes you up (strictly).
 > - If a player (A) comes to a cell where another player (B) is placed already, the previously placed player (B) has to start again from 1.
 
-- Optional Extensions:
+- **Optional Extensions**:
 > - Using the configuration you have to generate a random valid board & devise proper rules for placing objects on the board.
 > - Write unit tests to validate all implemented functionality and their edge cases.
 > - Addition of special objects:
@@ -29,9 +29,9 @@
 > Starting location of each player.<br>
 > The D die values that each player rolled in a turn.
 
-- Guidelines: The die roll can be implemented using a random function.
+- **Guidelines**: The die roll can be implemented using a random function.
 
-> Sample Input and Output:
+- **Sample Input and Output**:
 > <br>Input format:
 > <br>● Total Snakes S
 > <br>● Following S lines contains pair (Snake’s Head and Snake’s Tail)

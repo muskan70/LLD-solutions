@@ -32,38 +32,38 @@
 - **Guidelines**: The die roll can be implemented using a random function.
 
 - **Sample Input Format**:
-> <br>● Total Snakes S
+> ● Total Snakes S
 > <br>● Following S lines contains pair (Snake’s Head and Snake’s Tail)
 > <br>● Total Ladders L
 > <br>● Following L lines contains pair (Ladder bottom and Ladder top)
 > <br>● N no of players
 > <br>● Following N lines contains names & starting locations of each Player
 > <br>● An override to manually enter the D die values that each player rolled in each turn.
->> 9
->> <br>62 5
->> <br>33 6
->> <br>49 9
->> <br>88 16
->> <br>41 20
->> <br>56 53
->> <br>98 64
->> <br>93 73
->> <br>95 75
->> <br>8
->> <br>2 37
->> <br>27 46
->> <br>10 32
->> <br>51 68
->> <br>61 79
->> <br>65 84
->> <br>71 91
->> <br>81 100
->> <br>2
->> <br>Gaurav 1
->> <br>Sagar 1
+> 9
+> <br>62 5
+> <br>33 6
+> <br>49 9
+> <br>88 16
+> <br>41 20
+> <br>56 53
+> <br>98 64
+> <br>93 73
+> <br>95 75
+> <br>8
+> <br>2 37
+> <br>27 46
+> <br>10 32
+> <br>51 68
+> <br>61 79
+> <br>65 84
+> <br>71 91
+> <br>81 100
+> <br>2
+> <br>Gaurav 1
+> <br>Sagar 1
 
 - **Output Format**:
-> <br>Gaurav rolled a 6 and moved from 0 to 6
+> Gaurav rolled a 6 and moved from 0 to 6
 > <br>Sagar rolled a 1 and moved from 0 to 1
 > <br>Gaurav rolled a 6 and moved from 6 to 12
 > <br>Sagar rolled a 4 and moved from 1 to 5

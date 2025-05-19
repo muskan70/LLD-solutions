@@ -18,6 +18,7 @@
 + [Parking Lot](./ParkingLot)
 + [Publisher Subscriber System](./PublisherSubcriberSystem/Readme.md) : Pull Based Architecture, Observer Design Pattern
 + [Rate Limiter](./RateLimiter/Requirements.md)
++ [Ride Booking Service](./RideBookingService/Requirements.md)
 + [Snakes and Ladders Game](./SnakesNLaddersGame/Requirements.md) : Factory Design Pattern
 + [Splitwise](./SplitwiseSystem)
 + [Stack Overflow](./StackOverflowSystem)

@@ -9,6 +9,7 @@
 + [Cron Parser](./CronParser/README.md)
 + [Gaming Score Board System](./GamingScoreBoardSystem)
 + [Gym Centre Session Booking System](./GymSlotBookingManager/Requirements.md)
++ [Hotel Room Booking System](./HotelRoomBookingSystem/Requirements.md)
 + [Logging System](./LoggingSystem/README.md)
 + [Meeting Scheduler](./MeetingScheduler/Requirements.md)
 + [Movie Ticket Booking System](./MovieTicketBookingSystem/Requirements.md)

@@ -1,5 +1,6 @@
 ## LLD-solutions
 + [Amazon Locker System](./AmazaonLockerSystem/Requirements.md)
++ [Appointment Assigner](./AppointmentAssigner/)
 + [Book Manager](./BookManager)
 + [Build in Cache Library](./CacheSystem/InMemoryCacheWithStrategyPattern) : Strategy Design Pattern
 + [Chat Server App](./ChatServerApp/Requirements.md) 

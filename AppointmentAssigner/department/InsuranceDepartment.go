@@ -1,33 +1,23 @@
 package department
 
-import "appointment/constants"
+import (
+	"appointment/constants"
+)
 
 type InsuranceDepartment struct {
 	Department
 }
 
-var insuranceDept *InsuranceDepartment
-
-func NewInsuranceDepartment(desks int) {
-	insuranceDept = &InsuranceDepartment{Department: Department{
+func NewInsuranceDepartment(desks int) *InsuranceDepartment {
+	insuranceDept := &InsuranceDepartment{Department: Department{
 		Id:        constants.DEPARTMENT_TYPE_INSURANCE,
 		NoofDesks: desks,
+		DeskMap:   make(map[uint64]*Desk),
 	}}
 
 	for i := 0; i < desks; i++ {
 		desk := NewDesk(constants.DEPARTMENT_TYPE_ACCOUNTS)
-		accountDept.DeskMap[desk.Id] = desk
+		insuranceDept.DeskMap[desk.Id] = desk
 	}
+	return insuranceDept
 }
-
-// func (ins *InsuranceDepartment) CompleteTask(customer *CustomerRequirement) {
-// 	customer.Status = 1
-// 	ins.Queue = ins.Queue[1:]
-// }
-
-// func (ins *InsuranceDepartment) GetNextTaskId() uint64 {
-// 	if len(ins.Queue) > 0 {
-// 		return ins.Queue[0]
-// 	}
-// 	return 0
-// }

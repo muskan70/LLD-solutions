@@ -6,28 +6,16 @@ type LoansDepartment struct {
 	Department
 }
 
-var loanDept *LoansDepartment
-
-func NewLoanDepartment(desks int) {
-	loanDept = &LoansDepartment{Department: Department{
+func NewLoanDepartment(desks int) *LoansDepartment {
+	loanDept := &LoansDepartment{Department: Department{
 		Id:        constants.DEPARTMENT_TYPE_LOANS,
 		NoofDesks: desks,
+		DeskMap:   make(map[uint64]*Desk),
 	}}
 
 	for i := 0; i < desks; i++ {
 		desk := NewDesk(constants.DEPARTMENT_TYPE_ACCOUNTS)
-		accountDept.DeskMap[desk.Id] = desk
+		loanDept.DeskMap[desk.Id] = desk
 	}
+	return loanDept
 }
-
-// func (lo *LoansDepartment) CompleteTask(customer *CustomerRequirement) {
-// 	customer.Status = 1
-// 	lo.Queue = lo.Queue[1:]
-// }
-
-// func (lo *LoansDepartment) GetNextTaskId() uint64 {
-// 	if len(lo.Queue) > 0 {
-// 		return lo.Queue[0]
-// 	}
-// 	return 0
-// }

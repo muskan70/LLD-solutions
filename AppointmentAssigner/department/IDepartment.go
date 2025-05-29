@@ -16,6 +16,7 @@ type Department struct {
 type Desk struct {
 	Id           uint64
 	DepartmentId uint64
+	TokenId      uint64
 }
 
 func NewDesk(deptId uint64) *Desk {

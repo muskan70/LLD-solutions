@@ -1,0 +1,7 @@
+package constants
+
+const (
+	DEPARTMENT_TYPE_LOANS = iota + 1
+	DEPARTMENT_TYPE_INSURANCE
+	DEPARTMENT_TYPE_ACCOUNTS
+)

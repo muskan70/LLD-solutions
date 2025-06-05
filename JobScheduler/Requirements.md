@@ -24,11 +24,12 @@
 
 4. JobManager
 - Attributes => []Job
-- Methods => CheckJobsNextSchedule()
-> Loop over Job List and follow below steps:<br>
-> Step1 : if NextScheduledTime <=  CurrentTime <br>
-> Step2 : Put it in ScheduledTask List <br>
-> Step3: Update nextScheduledTime <br>
+- Methods => 
+    - CheckJobsNextSchedule()
+        > Loop over Job List and follow below steps:<br>
+        > Step1 : if NextScheduledTime <=  CurrentTime <br>
+        > Step2 : Put it in ScheduledTask List <br>
+        > Step3: Update nextScheduledTime <br>
 
 5. Scheduler
 - Attributes =>	[]Worker, []ScheduledTask, FreeWorkerIds, BusyWorkersIds, WorkerTaskMapping: map{taskId}workerId

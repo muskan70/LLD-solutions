@@ -3,13 +3,13 @@
 ### Level 1:
 **Ask**: Please implement a banking system library with methods that can support new account creation as well as depositing and withdrawal functions. <br>
 **Operations**:
-1. deposit <accountId> <amount>
+1. deposit, accountId, amount
 > Should create a new account with the given identifier and starting balance if it doesn't already exist.<br>
 > If the account already exists, deposit the given `amount` of money to the specified account `accountId`<br>
 > Returns "true" if an account was successfully created, <br>
 > Returns `amount` of the specified account if an account with `accountId` already exists. <br>
 
-2. withdraw <accountId> <amount>
+2. withdraw, accountId, amount
 > Should withdraw the given `amount` of money to the specified account `accountId` <br>
 > Returns a string representing the total amount of money in the account after the query has been processed. <br>
 > If the specified balance of the account is lower than the `amount` to be withdrawn, it should return an empty string. <br>
@@ -17,7 +17,7 @@
 
 ### Level 2:
 **Ask**: On your existing implementation, please implement a new functionality that would support the transferring of funds from one account to another.<br>
-**Operation**: transfer <fromId> <toId> <amount>
+**Operation**: transfer, fromId, toId, amount
 > Should transfer the given amount of money from account with fromId to account with toId. <br>
 > Returns a string representing the balance of fromId if the transfer was successful, or an empty string otherwise. <br>
 > Returns an empty string if fromId or toId doesn't exist.<br>
@@ -27,9 +27,9 @@
 
 ### Level 3:
 **Ask**: On your existing implementation, please implement a new functionality that would allow a user to identify the top N accounts sorted by spending activity (including transfers out and withdrawals). <br>
-**Operation**: TOP_SPENDERS <n>
-> Should return identifiers of top n accounts sorted by the total amount of money moved out of the account - either transferred out or withdrawn, in descending order. In case of a tie, sorted alphabetically by accountId in ascending order. 
-> The result should be a string in the following format: "accountId_1 (totalMovedOut_1"), "accountId_2 (totalMovedOut_2)" , ..., "accountId_n (totalMovedOut_n)".
+**Operation**: TOP_SPENDERS, n
+> Should return identifiers of top n accounts sorted by the total amount of money moved out of the account - either transferred out or withdrawn, in descending order. In case of a tie, sorted alphabetically by accountId in ascending order. <br>
+> The result should be a string in the following format: "accountId_1 (totalMovedOut_1"), "accountId_2 (totalMovedOut_2)" , ..., "accountId_n (totalMovedOut_n)".<br>
 > If less than n accounts exist in the system, then return all their identifiers (in the described format).
 
 Example:

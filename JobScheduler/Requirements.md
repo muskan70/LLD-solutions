@@ -24,27 +24,27 @@
 
 4. JobManager
 - Attributes => []Job
-- Methods => 
- - CheckJobsNextSchedule()
->   Loop over Job List <br>
->   - Step1 : if NextScheduledTime <=  CurrentTime <br>
->   - Step2 : Put it in ScheduledTask List <br>
->   - Step3: Update nextScheduledTime <br>
+- Methods => CheckJobsNextSchedule()
+> Loop over Job List and follow below steps:<br>
+> Step1 : if NextScheduledTime <=  CurrentTime <br>
+> Step2 : Put it in ScheduledTask List <br>
+> Step3: Update nextScheduledTime <br>
 
 5. Scheduler
 - Attributes =>	[]Worker, []ScheduledTask, FreeWorkerIds, BusyWorkersIds, WorkerTaskMapping: map{taskId}workerId
 - Methods =>
- - GetScheduledTasks(): Loop over scheduled tasks where status is scheduled 
- - AssignTask() 
-    > - tasks = GetScheduledTasks()<br>
-	> - check free workers list<br>
-	> - assign given tasks and put in WorkerTaskMapping<br>
-	> - Change status of worker : working and task status: In progress and call ExecuteTask() for each worker<br>
- - CheckTaskCompletion() 
-    > Check WorkerTaskMapping for each running task, if task assignment is more than 10 mins call StopExecution()<br>
- - TaskCompleted(workerId, taskId uint64) {
-	> worker status : free, task status : completed <br>
-	> add worker to free workers list
- - CancelScheduledTask(jobId int)
-	> update in scheduled tasks if status of jobId  = Scheduled, In Progress ->Cancelled <br>
-	> Check taskId in Controller WorkerTaskMapping and call stop execution
+    - GetScheduledTasks()
+        > return scheduled tasks where status is scheduled 
+    - AssignTask() 
+        > Step1: tasks = GetScheduledTasks()<br>
+        > Step2: check free workers list<br>
+        > Step3: assign given tasks and put in WorkerTaskMapping<br>
+        > Step4: Change status of worker : working and task status: In progress and call ExecuteTask() for each worker<br>
+    - CheckTaskCompletion() 
+        > Check WorkerTaskMapping for each running task, if task assignment is more than 10 mins call StopExecution()<br>
+    - TaskCompleted(workerId, taskId uint64) {
+        > Step1: update worker status : free, task status : completed <br>
+        > Step2: add worker to free workers list
+    - CancelScheduledTask(jobId int)
+        > Step1: update in scheduled tasks if status of jobId  = Scheduled, In Progress ->Cancelled <br>
+        > Step2: Check taskId in Controller WorkerTaskMapping and call stop execution

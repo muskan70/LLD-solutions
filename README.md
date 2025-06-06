@@ -28,6 +28,7 @@
 + [Splitwise](./SplitwiseSystem)
 + [Stack Overflow](./StackOverflowSystem)
 + [Tic Tac Toe Game](./TicTacToeGame)
++ [Train Seats Booking IRCTC System](./TrainSeatsBookingSystem/Requirements.md)
 + [Unix file search API](./UnixFileSearchAPI/README.md) : Composite Design Pattern, Specification Design Pattern 
 + [User Login with JWT Authentication](./UserLogin/README.md)
 + [Vending Machine](./VendingMachineSystem) : State Design Pattern, Singleton Pattern 

@@ -2,7 +2,6 @@
 + [Amazon Locker System](./AmazaonLockerSystem/Requirements.md)
 + [Appointment Assigner](./AppointmentAssigner/)
 + [Banking System](./BankingSystem/Requirements.md)
-+ [Book Manager](./BookManager)
 + [Build in Cache Library](./CacheSystem/InMemoryCacheWithStrategyPattern) : Strategy Design Pattern
 + [Chat Server App](./ChatServerApp/Requirements.md) 
 + [Chess Game](./ChessGame/Requirements.md)
@@ -12,7 +11,8 @@
 + [Gaming Score Board System](./GamingScoreBoardSystem)
 + [Gym Centre Session Booking System](./GymSlotBookingManager/Requirements.md)
 + [Hotel Room Booking System](./HotelRoomBookingSystem/Requirements.md)
-+ [JobScheduler](./JobScheduler/Requirements.md)
++ [Job Scheduler](./JobScheduler/Requirements.md)
++ [Library Book Manager](./LibraryBookManager)
 + [Logging System](./LoggingSystem/README.md)
 + [Meeting Scheduler](./MeetingScheduler/Requirements.md)
 + [Movie Ticket Booking System](./MovieTicketBookingSystem/Requirements.md)

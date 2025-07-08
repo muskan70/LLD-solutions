@@ -20,7 +20,7 @@
 + [Meeting Scheduler](./MeetingScheduler/Requirements.md)
 + [Movie Ticket Booking System](./MovieTicketBookingSystem/Requirements.md)
 + [MultiAttribute Key-Value Cache System](./MultiAttributeKeyValueCacheSystem)
-+ [N-elevator System](./NElevatorSystem)
++ [N-elevator System](./NElevatorSystem/Readme.md)
 + [NotificationSystem](./NotificationSystem/Requirements.md)
 + [Parking Lot](./ParkingLot)
 + [Publisher Subscriber System](./PublisherSubcriberSystem/Readme.md) : Pull Based Architecture, Observer Design Pattern

@@ -88,5 +88,7 @@
 2. Strategy Pattern for seat locking
 3. Observer pattern for user notification
 
+![Activity Diagram](./ActivityDiagram.png)
+
 
 

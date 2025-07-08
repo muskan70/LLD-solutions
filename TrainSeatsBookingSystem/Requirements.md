@@ -33,13 +33,16 @@
 - ConfirmBooking()
 - CancelBooking()
 
+![Design](./TrainBooking.png)
+
 ### API Design
 1. accountSignUp(app_key, username, encryptedPassword, address)
 2. searchTrains(startStation, endStation, date, train class)
 3. bookTickets(trainId, noofSeats)
 4. cancelBooking(bookingId)
 
-![Design](./TrainBooking.png)
+![Distributed Transaction in Booking](./DistributedTransaction.png)
+
 
 
 

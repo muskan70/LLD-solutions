@@ -9,6 +9,8 @@
 + [Course Curriculum manager](./CourseCurriculumManager)
 + [Cricket Scoreboard](./CricketScoreboard/Readme.md)
 + [Cron Parser](./CronParser/README.md)
++ [Car Rental System](./CarRentalSystem/Requirements.md)
++ [Flight Booking System](./FlightBookingSystem/Requirements.md)
 + [Gaming Score Board System](./GamingScoreBoardSystem)
 + [Gym Centre Session Booking System](./GymSlotBookingManager/Requirements.md)
 + [Hotel Room Booking System](./HotelRoomBookingSystem/Requirements.md)
